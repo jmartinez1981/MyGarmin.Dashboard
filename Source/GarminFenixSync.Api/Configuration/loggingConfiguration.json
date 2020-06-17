@@ -1,0 +1,37 @@
+{
+  "Serilog": {
+    "Using": [ "Serilog.Sinks.Console" ],
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Warning"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "Console",
+        "Args": {
+          "outputTemplate": "{Timestamp:o} {Level:u} {ConversationId} {ThreadId} {SourceContext:l} - {Message} {Exception}{NewLine}",
+          "formatProvider": "System.Globalization.CultureInfo::InvariantCulture",
+          "standardErrorFromLevel": "Information",
+          "theme": "Serilog.Sinks.SystemConsole.Themes.SystemConsoleTheme::Colored, Serilog.Sinks.Console"
+        }
+      },
+      {
+        "Name": "File",
+        "Args": {
+          "path": "%TEMP%\\Garmin\\Logs\\GarminFenixSync\\GarminFenixSync.Api.log",
+          "outputTemplate": "{Timestamp:o}|TMS|SystemControl|{Level:u}|{ConversationId}|{ThreadId}|{SourceContext:l}|{Message}|{Exception}{NewLine}",
+          "formatProvider": "System.Globalization.CultureInfo::InvariantCulture",
+          "fileSizeLimitBytes": "52428800",
+          "rollOnFileSizeLimit": "true",
+          "retainedFileCountLimit": "25"
+        }
+      }
+    ],
+    "Enrich": [ "FromLogContext", "WithThreadId" ],
+    "Properties": {
+      "Application": "GarminFenixSync"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 ﻿namespace GarminFenixSync.Api.Settings
 {
-    public class ConnectionSettings
+    public class GarminConnectionSettings
     {
         public string Username { get; set; }
 
