@@ -2,6 +2,9 @@
 {
     internal class Client
     {
-        public strinig a 
+        public void Connect()
+        {
+
+        } 
     }
 }
