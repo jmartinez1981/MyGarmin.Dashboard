@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarminFenixSync.Api", "GarminFenixSync.Api\GarminFenixSync.Api.csproj", "{E83463FC-7332-479A-AE56-03EBA8868CDF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GarminClient", "GarminClient", "{01D16B20-EC1D-47E8-AF5D-CAFE124C7CF7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GarminFenixSync.Connectivity.Client", "GarminClient\GarminFenixSync.Connectivity.Client\GarminFenixSync.Connectivity.Client.csproj", "{44F4A4EC-2055-4FBE-AAA9-8CDC6E8E4CAE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E83463FC-7332-479A-AE56-03EBA8868CDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E83463FC-7332-479A-AE56-03EBA8868CDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E83463FC-7332-479A-AE56-03EBA8868CDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E83463FC-7332-479A-AE56-03EBA8868CDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44F4A4EC-2055-4FBE-AAA9-8CDC6E8E4CAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44F4A4EC-2055-4FBE-AAA9-8CDC6E8E4CAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44F4A4EC-2055-4FBE-AAA9-8CDC6E8E4CAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44F4A4EC-2055-4FBE-AAA9-8CDC6E8E4CAE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{44F4A4EC-2055-4FBE-AAA9-8CDC6E8E4CAE} = {01D16B20-EC1D-47E8-AF5D-CAFE124C7CF7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ABB1F603-A574-4A3B-A4A7-CD7FF90FF3FC}
+	EndGlobalSection
+EndGlobal
