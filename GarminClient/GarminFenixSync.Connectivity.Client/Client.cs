@@ -2,6 +2,9 @@
 {
     internal class Client
     {
-        public Client(I)
+        public void Connect()
+        {
+
+        } 
     }
 }
