@@ -2,6 +2,6 @@
 {
     internal class Client
     {
-        public Client(I)
+        public strinig a 
     }
 }
