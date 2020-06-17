@@ -73,7 +73,10 @@ namespace GarminFenixSync.Api.Hosting
                     var apiHost = webHostBuilderContext.Configuration.GetValue<string>("AppSettings:Server:Host");
                     var apiPort = webHostBuilderContext.Configuration.GetValue<int>("AppSettings:Server:Port");
                     var address = new IPEndPoint(IPAddress.Parse(apiHost), apiPort);
-                    options.Listen(address);
+                    options.Listen(address, listenOptions => 
+                    {
+                        //listenOptions.UseHttps();
+                    });
                 });
             });
         }
