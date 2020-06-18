@@ -15,7 +15,7 @@ namespace GarminFenixSync.Api.Hosting
     [ExcludeFromCodeCoverage]
     public class WebHostConfigurator
     {
-        private const string AppSettingsFilename = "appsettings";
+        private const string AppSettingsFilename = "appSettings";
         private const string LoggingConfigurationFilename = "loggingConfiguration";
 
         public static async Task RunAsConsoleAsync(IHostBuilder hostBuilder, string consoleTitle)
@@ -46,6 +46,13 @@ namespace GarminFenixSync.Api.Hosting
             hostBuilder?
                 .ConfigureAppConfiguration((hostContext, configApp) =>
                 {
+                    var files = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "Configuration"));
+                    foreach (var file in files)
+                    {
+                        Console.WriteLine($"File detected: {file}");
+                    }
+
+
                     configApp.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "Configuration"));
                     configApp.AddJsonFile($"{AppSettingsFilename}.json", optional: true);
                     //configApp.AddJsonFile($"{AppSettingsFilename}.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
@@ -72,11 +79,12 @@ namespace GarminFenixSync.Api.Hosting
                     var apiHost = webHostBuilderContext.Configuration.GetValue<string>("AppSettings:Server:Host");
                     var apiPort = webHostBuilderContext.Configuration.GetValue<int>("AppSettings:Server:Port");
                     var address = new IPEndPoint(IPAddress.Parse(apiHost), apiPort);
-                    options.Listen(address, listenOptions => 
+                    options.Listen(address, listenOptions =>
                     {
                         //listenOptions.UseHttps();
                     });
                 });
+                //webBuilder.UseUrls("http://*:5000");
             });
         }
 
