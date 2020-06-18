@@ -48,9 +48,9 @@ namespace GarminFenixSync.Api.Hosting
                 {
                     configApp.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "Configuration"));
                     configApp.AddJsonFile($"{AppSettingsFilename}.json", optional: true);
-                    configApp.AddJsonFile($"{AppSettingsFilename}.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
+                    //configApp.AddJsonFile($"{AppSettingsFilename}.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
                     configApp.AddJsonFile($"{LoggingConfigurationFilename}.json", optional: true);
-                    configApp.AddJsonFile($"{LoggingConfigurationFilename}.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
+                    //configApp.AddJsonFile($"{LoggingConfigurationFilename}.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
                 });
         }
 
