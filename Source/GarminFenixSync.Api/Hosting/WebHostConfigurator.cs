@@ -26,7 +26,6 @@ namespace GarminFenixSync.Api.Hosting
 
         public static async Task RunAsServiceAsync(IHostBuilder hostBuilder)
         {
-            SetCurrentDirectory();
             await hostBuilder.UseWindowsService().UseSystemd()
                 .Build().RunAsync().ConfigureAwait(false);
         }
@@ -88,14 +87,7 @@ namespace GarminFenixSync.Api.Hosting
                 webHostBuilder.UseStartup<Startup>();
             });
         }
-
-        private static void SetCurrentDirectory()
-        {
-            var pathToDll = Process.GetCurrentProcess()?.MainModule?.FileName;
-            var pathToContentRoot = Path.GetDirectoryName(pathToDll);
-            Directory.SetCurrentDirectory(pathToContentRoot);
-        }
-
+        
         private static void ConfigureErrorsOnStartup(IHostBuilder hostBuilder)
         {
             hostBuilder.ConfigureWebHost(webHostBuilder =>
