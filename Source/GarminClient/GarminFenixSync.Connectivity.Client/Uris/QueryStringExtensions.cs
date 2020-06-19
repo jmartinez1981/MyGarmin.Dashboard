@@ -19,6 +19,26 @@ namespace GarminFenixSync.Connectivity.Client.Uris
         internal const string GenerateTwoExtraServiceTicketsKey = "generateTwoExtraServiceTickets";
         internal const string GenerateNoServiceTicketKey = "generateNoServiceTicket";
         internal const string GlobalOptInCheckedKey = "globalOptInChecked";
+        internal const string GlobalOptInShownKey = "globalOptInShown";
+        internal const string LocaleKey = "locale";
+        internal const string IdKey = "id";
+        internal const string InitialFocusKey = "initialFocus";
+        internal const string LocationPromptShonKey = "locationPromptShon";
+        internal const string MobileKey = "mobile";
+        internal const string OpenCreateAccountKey = "openCreateAccount";
+        internal const string PrivacyStatementUrlKey = "privacyStatementUrl";
+        internal const string RedirectAfterAccountCreationUrlKey = "redirectAfterAccountCreationUrl";
+        internal const string RedirectAfterAccountLoginUrlKey = "redirectAfterAccountLoginUrl";
+        internal const string RememberMeCheckedKey = "rememberMeChecked";
+        internal const string RememberMeShownKey = "rememberMeShown";
+        internal const string ServiceKey = "service";
+        internal const string ShowTermsOfUseKey = "showTermsOfUse";
+        internal const string ShowPrivacyPolicyKey = "showPrivacyPolicy";
+        internal const string ShowConnectLegalAgeKey = "showConnectLegalAge";
+        internal const string ShowPasswordKey = "showPassword";
+        internal const string SourceKey = "source";
+        internal const string UseCustomHeaderKey = "useCustomHeader";
+        internal const string WebhostKey = "webhost";
 
         private static readonly Dictionary<string, string> Parameters = new Dictionary<string, string>
         {
@@ -34,32 +54,30 @@ namespace GarminFenixSync.Connectivity.Client.Uris
             {GenerateTwoExtraServiceTicketsKey, "false"},
             {GenerateNoServiceTicketKey, "false"},
             {GlobalOptInCheckedKey, "false"},
-            //{"globalOptInShown", "true"},
-            //{"id", "gauth-widget"},
-            //{"initialFocus", "true"},
-            //{"locale", LOCALE},
-            //{"locationPromptShon", "true"},
-            //{"mobile", "false"},
-            //{"openCreateAccount", "false"},
-            //{"privacyStatementUrl", PRIVACY_STATEMENT_URL},
-            //{"redirectAfterAccountCreationUrl", CONNECT_URL_MODERN},
-            //{"redirectAfterAccountLoginUrl", CONNECT_URL_MODERN},
-            //{"rememberMeChecked", "false"},
-            //{"rememberMeShown", "true"},
-            //{"service", CONNECT_URL_MODERN},
-            //{"showTermsOfUse", "false"},
-            //{"showPrivacyPolicy", "false"},
-            //{"showConnectLegalAge", "false"},
-            //{"showPassword", "true"},
-            //{"source", CONNECT_URL_SIGNIN},
-            //{"useCustomHeader", "false"},
-            //{"webhost", CONNECT_URL_MODERN}
+            {GlobalOptInShownKey, "true"},
+            {IdKey, "gauth-widget"},
+            {InitialFocusKey, "true"},
+            {LocaleKey, "LOCALE"},
+            {LocationPromptShonKey, "true"},
+            {MobileKey, "false"},
+            {OpenCreateAccountKey, "false"},
+            {PrivacyStatementUrlKey, Garmin.PrivacyStatementUri.ToString()},
+            {RedirectAfterAccountCreationUrlKey, GarminConnect.ModernUri.ToString()},
+            {RedirectAfterAccountLoginUrlKey, GarminConnect.ModernUri.ToString()},
+            {RememberMeCheckedKey, "false"},
+            {RememberMeShownKey, "true"},
+            {ServiceKey, GarminConnect.ModernUri.ToString()},
+            {ShowTermsOfUseKey, "false"},
+            {ShowPrivacyPolicyKey, "false"},
+            {ShowConnectLegalAgeKey, "false"},
+            {ShowPasswordKey, "true"},
+            {SourceKey, GarminConnect.SiginUri.ToString()},
+            {UseCustomHeaderKey, "false"},
+            {WebhostKey, GarminConnect.ModernUri.ToString()}
         };
 
-        public static Uri GetQueryString()
+        public static Uri GetQueryString(Uri uri)
         {
-            var uri = GarminSso.SigninUri;
-            
             Parameters.ToList().ForEach(x=> uri.AddParameter(x.Key, x.Value));
 
             return uri;
