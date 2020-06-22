@@ -1,16 +1,19 @@
-﻿using GarminFenixSync.Api.Middlewares.ErrorHandling;
-using GarminFenixSync.Api.Middlewares.RequestAndResponse;
-using GarminFenixSync.Api.Settings;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MyGarmin.Connectivity.Client;
+using MyGarmin.Dashboard.Api.Middlewares.ErrorHandling;
+using MyGarmin.Dashboard.Api.Middlewares.RequestAndResponse;
+using MyGarmin.Dashboard.Api.Settings;
 using System;
+using System.Net;
+using System.Net.Http;
 
-namespace GarminFenixSync.Api.Hosting
+namespace MyGarmin.Dashboard.Api.Hosting
 {
     /// <summary>
     /// Startup class to configure WebHost.
@@ -44,6 +47,9 @@ namespace GarminFenixSync.Api.Hosting
 
             services.Configure<HostOptions>(
                     opts => opts.ShutdownTimeout = this.Configuration.GetValue<TimeSpan>("ServerSettings:ShutdownTimeout"));
+
+            services.AddHttpClient<IGarminClient, GarminClient>()
+                .ConfigurePrimaryHttpMessageHandler(() => ConfigureMessageHandler());
         }
 
         /// <summary>
@@ -83,6 +89,16 @@ namespace GarminFenixSync.Api.Hosting
                     logger.LogInformation("Listening on address: " + addresses);
                 }
             }
+        }
+
+        private static HttpClientHandler ConfigureMessageHandler()
+        {
+            return new HttpClientHandler
+            {
+                AllowAutoRedirect = true,
+                UseCookies = true,
+                CookieContainer = new CookieContainer()
+            };
         }
     }
 }

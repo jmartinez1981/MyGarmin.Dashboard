@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace GarminFenixSync.Api.Middlewares.ErrorHandling
+namespace MyGarmin.Dashboard.Api.Middlewares.ErrorHandling
 {
     internal class ErrorDetails
     {

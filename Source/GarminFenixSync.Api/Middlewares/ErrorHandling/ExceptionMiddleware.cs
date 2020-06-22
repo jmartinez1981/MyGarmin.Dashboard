@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace GarminFenixSync.Api.Middlewares.ErrorHandling
+namespace MyGarmin.Dashboard.Api.Middlewares.ErrorHandling
 {
     internal class ExceptionMiddleware
     {

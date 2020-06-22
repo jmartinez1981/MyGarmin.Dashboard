@@ -1,16 +1,15 @@
-﻿using GarminFenixSync.Common.Logging;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using MyGarmin.Dashboard.Common.Logging;
 using Serilog;
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace GarminFenixSync.Api.Hosting
+namespace MyGarmin.Dashboard.Api.Hosting
 {
     [ExcludeFromCodeCoverage]
     public class WebHostConfigurator

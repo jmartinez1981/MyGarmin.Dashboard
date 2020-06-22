@@ -20,7 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\00_Crosscutting\GarminFenixSync.Common.Logging\GarminFenixSync.Common.Logging.csproj" />
+    <ProjectReference Include="..\00_Crosscutting\GarminFenixSync.Common.Logging\MyGarmin.Dashboard.Common.Logging.csproj" />
+    <ProjectReference Include="..\GarminClient\GarminFenixSync.Connectivity.Client\MyGarmin.Connectivity.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>

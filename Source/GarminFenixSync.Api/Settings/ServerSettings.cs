@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GarminFenixSync.Api.Settings
+namespace MyGarmin.Dashboard.Api.Settings
 {
     public class ServerSettings
     {

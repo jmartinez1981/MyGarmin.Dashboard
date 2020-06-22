@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace GarminFenixSync.Api.Middlewares.RequestAndResponse
+namespace MyGarmin.Dashboard.Api.Middlewares.RequestAndResponse
 {
     internal class RequestResponseMiddleware : IDisposable
     {

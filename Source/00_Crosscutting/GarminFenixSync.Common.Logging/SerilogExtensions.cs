@@ -4,7 +4,7 @@ using Serilog.Debugging;
 using System;
 using System.IO;
 
-namespace GarminFenixSync.Common.Logging
+namespace MyGarmin.Dashboard.Common.Logging
 {
     /// <summary>
     /// Microsoft dependency injections for serilog.

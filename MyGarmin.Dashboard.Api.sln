@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GarminClient", "GarminClient", "{01D16B20-EC1D-47E8-AF5D-CAFE124C7CF7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Connectivity", "Connectivity", "{01D16B20-EC1D-47E8-AF5D-CAFE124C7CF7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00_Crosscutting", "00_Crosscutting", "{D3742A6B-0529-43CA-A4D0-200EF77A3A52}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{4C8FA5D9-CB21-4B68-BF51-1336FF8FD8F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarminFenixSync.Common.Logging", "Source\00_Crosscutting\GarminFenixSync.Common.Logging\GarminFenixSync.Common.Logging.csproj", "{2AD32ABA-11C2-4E85-BEA2-1995C4BA1C45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyGarmin.Dashboard.Common.Logging", "Source\00_Crosscutting\GarminFenixSync.Common.Logging\MyGarmin.Dashboard.Common.Logging.csproj", "{2AD32ABA-11C2-4E85-BEA2-1995C4BA1C45}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GarminFenixSync.Api", "Source\GarminFenixSync.Api\GarminFenixSync.Api.csproj", "{7A7D671C-3A62-4874-9717-47A260DF62C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyGarmin.Dashboard.Api", "Source\GarminFenixSync.Api\MyGarmin.Dashboard.Api.csproj", "{7A7D671C-3A62-4874-9717-47A260DF62C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GarminFenixSync.Connectivity.Client", "Source\GarminClient\GarminFenixSync.Connectivity.Client\GarminFenixSync.Connectivity.Client.csproj", "{2141F002-BE56-4CAA-931E-566599550B4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyGarmin.Connectivity.Client", "Source\GarminClient\GarminFenixSync.Connectivity.Client\MyGarmin.Connectivity.Client.csproj", "{2141F002-BE56-4CAA-931E-566599550B4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConnection", "Source\TestConnection\TestConnection.csproj", "{58854E18-86D4-49B0-90E7-8BC660D29424}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{2141F002-BE56-4CAA-931E-566599550B4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2141F002-BE56-4CAA-931E-566599550B4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2141F002-BE56-4CAA-931E-566599550B4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58854E18-86D4-49B0-90E7-8BC660D29424}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58854E18-86D4-49B0-90E7-8BC660D29424}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58854E18-86D4-49B0-90E7-8BC660D29424}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58854E18-86D4-49B0-90E7-8BC660D29424}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +49,7 @@ Global
 		{2AD32ABA-11C2-4E85-BEA2-1995C4BA1C45} = {D3742A6B-0529-43CA-A4D0-200EF77A3A52}
 		{7A7D671C-3A62-4874-9717-47A260DF62C0} = {4C8FA5D9-CB21-4B68-BF51-1336FF8FD8F4}
 		{2141F002-BE56-4CAA-931E-566599550B4E} = {01D16B20-EC1D-47E8-AF5D-CAFE124C7CF7}
+		{58854E18-86D4-49B0-90E7-8BC660D29424} = {4C8FA5D9-CB21-4B68-BF51-1336FF8FD8F4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ABB1F603-A574-4A3B-A4A7-CD7FF90FF3FC}

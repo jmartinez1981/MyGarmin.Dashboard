@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace GarminFenixSync.Api.Middlewares.RequestAndResponse
+namespace MyGarmin.Dashboard.Api.Middlewares.RequestAndResponse
 {
     internal static class RequestResponseMiddlewareExtensions
     {

@@ -1,14 +1,14 @@
-﻿using GarminFenixSync.Api.Hosting;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
+using MyGarmin.Dashboard.Api.Hosting;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GarminFenixSync.Api
+namespace MyGarmin.Dashboard.Api
 {
     internal static class Program
     {
-        private const string ConsoleTitle = "GarminFenixSync.Api";
+        private const string ConsoleTitle = "MyGarmin.Dashboard.Api";
 
         internal static async Task Main(string[] args)
         {
