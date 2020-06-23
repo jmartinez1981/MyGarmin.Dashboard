@@ -14,10 +14,21 @@ namespace MyGarmin.Connectivity.Client.Uris
 
         public static Uri Download(int limit, int start, DateTime date)
         {
-            return ActivitiesUri
-                    .AddParameter(LimitParameterKey, limit.ToString(System.Globalization.CultureInfo.InvariantCulture))
-                    .AddParameter(StartParameterKey, start.ToString(System.Globalization.CultureInfo.InvariantCulture))
-                    .AddParameter(DateParameterKey, GetUnixTimestamp(date).ToString(System.Globalization.CultureInfo.InvariantCulture));
+            var uri = ActivitiesUri
+                .AddParameter(LimitParameterKey, limit.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                .AddParameter(StartParameterKey, start.ToString(System.Globalization.CultureInfo.InvariantCulture));
+
+            if (date != default)
+            {
+                uri.AddParameter(DateParameterKey, GetUnixTimestamp(date).ToString(System.Globalization.CultureInfo.InvariantCulture));
+            }
+
+            return uri;
+        }
+
+        public static Uri Download(int limit, int start)
+        {
+            return Download(limit, start, default);
         }
 
         private static int GetUnixTimestamp(DateTime date)

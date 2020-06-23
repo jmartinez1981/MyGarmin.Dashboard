@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
+using MyGarmin.Connectivity.Client.Data;
 using MyGarmin.Connectivity.Client.Uris;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -12,8 +14,6 @@ namespace MyGarmin.Connectivity.Client
     public class GarminClient : IGarminClient
     {
         private const string CookieSsoId = "GARMIN-SSO-GUID";
-        private const string CookieSessionId = "SESSIONID";
-
         private readonly HttpClient httpClient;
         private readonly ILogger<GarminClient> logger;
 
@@ -29,7 +29,7 @@ namespace MyGarmin.Connectivity.Client
         {
             var ticket = await AuthFirstStep().ConfigureAwait(false);
             await AuthSecondStep(ticket).ConfigureAwait(false);
-            await DownloadActivities().ConfigureAwait(false);
+            var activities = await DownloadActivities().ConfigureAwait(false);
         }
 
         private async Task<string> AuthFirstStep()
@@ -80,16 +80,35 @@ namespace MyGarmin.Connectivity.Client
             response.EnsureSuccessStatusCode();
         }
 
-        private async Task DownloadActivities()
+        private async Task<List<Activity>> DownloadActivities()
         {
             const int limit = 50;
-            var from = DateTime.UtcNow;
+            bool remainingActivities = true;
+            int totalActivities = 0;
+            var activities = new List<Activity>();
 
-            var url = DownloadUri.Download(limit, 0, from);
-            this.httpClient.DefaultRequestHeaders.Add("NK", "NT");
-            var response = await this.httpClient.GetAsync(url).ConfigureAwait(false);
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            while(remainingActivities)
+            {
+                var url = DownloadUri.Download(limit, totalActivities);
+                this.httpClient.DefaultRequestHeaders.Add("NK", "NT");
+                var response = await this.httpClient.GetAsync(url).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var currentActivities = JsonSerializer.Deserialize<List<Activity>>(content);
+                
+                if (!currentActivities.Any())
+                {
+                    remainingActivities = false;
+                }
+                else
+                {
+                    totalActivities += currentActivities.Count;
+                    activities.AddRange(currentActivities);
+                    this.logger.LogInformation($"Activities downloaded: {totalActivities}");
+                }
+            }
+
+            return activities;
         }
 
         /// <summary>
@@ -116,7 +135,7 @@ namespace MyGarmin.Connectivity.Client
         {
             response.Headers.TryGetValues("set-cookie", out var responseCookies);
 
-            if (!responseCookies.AsEnumerable<string>().Any(x => x == cookieName))
+            if (!responseCookies.AsEnumerable<string>().Any(x => x.Contains(cookieName)))
             {
                 this.logger.LogError($"cookie not exists: {cookieName}");
             }
