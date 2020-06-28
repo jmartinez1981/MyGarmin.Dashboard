@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyGarmin.Dashboard.Applicat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{64EB2110-A184-4B29-8FB1-047C2FBBD4C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGarmin.Dashboard.Common.Settings", "Source\Api\00_Crosscutting\MyGarmin.Dashboard.Common.Settings\MyGarmin.Dashboard.Common.Settings.csproj", "{375B9BAA-A7DD-4BF7-A96B-CE6E9A95487D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{B0048F89-417C-40F8-BDFD-6ECA4B7B77C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0048F89-417C-40F8-BDFD-6ECA4B7B77C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0048F89-417C-40F8-BDFD-6ECA4B7B77C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{375B9BAA-A7DD-4BF7-A96B-CE6E9A95487D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{375B9BAA-A7DD-4BF7-A96B-CE6E9A95487D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{375B9BAA-A7DD-4BF7-A96B-CE6E9A95487D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{375B9BAA-A7DD-4BF7-A96B-CE6E9A95487D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +78,7 @@ Global
 		{07C756A1-C897-42D7-B71D-1360A22AF5D8} = {8BC3BC94-07C1-49FF-8959-812D30775381}
 		{B0048F89-417C-40F8-BDFD-6ECA4B7B77C6} = {20E7059C-4344-4EFC-A545-72A113F7843C}
 		{64EB2110-A184-4B29-8FB1-047C2FBBD4C1} = {4C8FA5D9-CB21-4B68-BF51-1336FF8FD8F4}
+		{375B9BAA-A7DD-4BF7-A96B-CE6E9A95487D} = {D3742A6B-0529-43CA-A4D0-200EF77A3A52}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ABB1F603-A574-4A3B-A4A7-CD7FF90FF3FC}

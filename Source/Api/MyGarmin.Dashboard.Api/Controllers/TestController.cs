@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyGarmin.Connectivity.Client;
 using MyGarmin.Dashboard.Connectivity.StravaClient;
 using System.Threading.Tasks;
@@ -6,6 +7,8 @@ using System.Threading.Tasks;
 namespace GarminFenixSync.Api
 {
     [Route("api/[Controller]")]
+    [Authorize]
+    [ApiController]
     public class TestController : ControllerBase
     {
         private readonly IGarminClient garminClient;

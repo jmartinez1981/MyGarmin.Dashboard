@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyGarmin.Dashboard.Api.Settings
+namespace MyGarmin.Dashboard.Common.Settings
 {
     public class ServerSettings
     {

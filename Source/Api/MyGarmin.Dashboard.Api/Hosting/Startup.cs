@@ -1,20 +1,24 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using MyGarmin.Connectivity.Client;
 using MyGarmin.Dashboard.Api.DelegatingHandlers;
 using MyGarmin.Dashboard.Api.Middlewares.ErrorHandling;
-using MyGarmin.Dashboard.Api.Middlewares.RequestAndResponse;
-using MyGarmin.Dashboard.Api.Settings;
+using MyGarmin.Dashboard.ApplicationServices;
+using MyGarmin.Dashboard.Common.Settings;
 using MyGarmin.Dashboard.Connectivity.StravaClient;
 using MyGarmin.Dashboard.Connectivity.StravaClient.Uris;
+using Serilog;
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 
 namespace MyGarmin.Dashboard.Api.Hosting
 {
@@ -47,9 +51,10 @@ namespace MyGarmin.Dashboard.Api.Hosting
 
             services.Configure<ServerSettings>(this.Configuration.GetSection("AppSettings:Server"));
             services.Configure<GarminConnectionSettings>(this.Configuration.GetSection("AppSettings:GarminConnection"));
+            services.Configure<AuthenticationSettings>(this.Configuration.GetSection("AppSettings:Authentication"));
 
             services.Configure<HostOptions>(
-                    opts => opts.ShutdownTimeout = this.Configuration.GetValue<TimeSpan>("ServerSettings:ShutdownTimeout"));
+                    opts => opts.ShutdownTimeout = this.Configuration.GetValue<TimeSpan>("AppSettings:Server:ShutdownTimeout"));
 
             services.AddHttpClient<IGarminClient, GarminClient>()
                 .ConfigurePrimaryHttpMessageHandler(() => ConfigureGarminClientMessageHandler());
@@ -61,6 +66,42 @@ namespace MyGarmin.Dashboard.Api.Hosting
             .AddHttpMessageHandler<AuthenticationDelegatingHandler>();
 
             services.AddScoped<AuthenticationDelegatingHandler>();
+            services.AddScoped<IUserService, UserService>();
+
+            // configure jwt authentication
+            var authSettings = this.Configuration.GetSection("AppSettings:Authentication").Get<AuthenticationSettings>();
+            var key = Encoding.ASCII.GetBytes(authSettings.Secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+            // Configure Cors
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
+            });
+
         }
 
         /// <summary>
@@ -78,18 +119,24 @@ namespace MyGarmin.Dashboard.Api.Hosting
             lifetime?.ApplicationStarted.Register(
               () => LogAddresses(app.ServerFeatures, logger));
 
-            app.UseRouting();
-            
-            app.ConfigureRequestResponseLogging();
             app.ConfigureExceptionHandler();
 
+            app.UseSerilogRequestLogging();
+
+            app.UseRouting();
+
+            app.UseCors();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
         }
 
-        private static void LogAddresses(IFeatureCollection features, ILogger logger)
+        private static void LogAddresses(IFeatureCollection features, Microsoft.Extensions.Logging.ILogger logger)
         {
             var addressFeature = features.Get<IServerAddressesFeature>();
 
