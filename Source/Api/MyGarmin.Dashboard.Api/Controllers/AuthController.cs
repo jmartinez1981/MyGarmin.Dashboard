@@ -11,6 +11,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.Api.Controllers
 {
@@ -29,14 +30,14 @@ namespace MyGarmin.Dashboard.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]AuthenticateRequest model)
+        public async Task<IActionResult> Authenticate([FromBody]AuthenticateRequest model)
         {
             if (model == null || string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password))
             {
                 return this.BadRequest(new { statusText = "Username or password is empty" });
             }
 
-            var user = this.userService.GetUser(model.Username, model.Password);
+            var user = await this.userService.GetUser(model.Username, model.Password).ConfigureAwait(false);
 
             if (user == null)
                 return this.BadRequest(new { statusText = "Username or password is incorrect" });
@@ -55,7 +56,7 @@ namespace MyGarmin.Dashboard.Api.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                    new Claim(ClaimTypes.Name, user.Username)
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(15),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

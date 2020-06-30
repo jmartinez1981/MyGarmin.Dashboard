@@ -1,0 +1,18 @@
+{
+  "MongodbSettings": {
+    "Host": {
+      "Address": "localhost",
+      "Port": 27017
+    },
+    "Credentials": {
+      "User": "",
+      "Password": ""
+    },
+    "RetryPolicy": {
+      "Retries": 10
+    },
+    "Database": "MyTrainingDashboardDb",
+    "ReplicaSetName": "rs0"
+  }
+}
+

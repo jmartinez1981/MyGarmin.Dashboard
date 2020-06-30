@@ -1,15 +1,18 @@
 ﻿using MyGarmin.Dashboard.ApplicationServices.Entities;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.ApplicationServices
 {
     public interface IUserService
     {
-        User GetUserById(int id);
+        Task<User> GetUser(string username);
 
-        User GetUser(string username, string password);
+        Task<User> GetUser(string username, string password);
 
-        Tuple<int, List<User>> GetUsers(List<string> filter, int rangeInit, int rangeEnd, string sort);
+        Task<Tuple<int, List<User>>> GetUsers(List<string> filter, int rangeInit, int rangeEnd, string sort);
+
+        Task CreateUser(User user);
     }
 }

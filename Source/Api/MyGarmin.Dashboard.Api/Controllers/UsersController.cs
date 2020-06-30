@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyGarmin.Dashboard.Api.Models;
 using MyGarmin.Dashboard.ApplicationServices;
+using MyGarmin.Dashboard.ApplicationServices.Entities;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.Api.Controllers
 {
@@ -18,14 +22,14 @@ namespace MyGarmin.Dashboard.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(string id)
         {
             if (id == default)
             {
                 return this.BadRequest();
             }
 
-            var user = this.userService.GetUserById(id);
+            var user = await this.userService.GetUser(id).ConfigureAwait(false);
 
             if (user == null)
             {
@@ -35,14 +39,44 @@ namespace MyGarmin.Dashboard.Api.Controllers
             return this.Ok(user);
         }
         [HttpGet]
-        public IActionResult Get(string filter, string range, string sort)
+        public async Task<IActionResult> Get(string filter, string range, string sort)
         {
-            var result = this.userService.GetUsers(new List<string>(), 0, 9, sort);
+            var result = await this.userService.GetUsers(new List<string>(), 0, 9, sort).ConfigureAwait(false);
 
             this.HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Range");
             this.HttpContext.Response.Headers.Add("Content-Range", $"users 0-9/{result.Item1}");
 
-            return this.Ok(result.Item2);
+            var users = new List<UserModel>();
+
+            result.Item2.ForEach(x => users.Add(new UserModel { Id = x.Username, Firstname = x.Firstname, Lastname = x.Lastname }));
+            
+            return this.Ok(users);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(UserCreationModel model)
+        {
+            if (model == null)
+            {
+                return this.BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
+            
+            var user = new User
+            {
+                Username = model.Id,
+                Password = model.Password,
+                Firstname = model.Firstname,
+                Lastname = model.Lastname
+            };
+
+            await this.userService.CreateUser(user).ConfigureAwait(false);
+
+            return this.Ok(model);
         }
     }
 }

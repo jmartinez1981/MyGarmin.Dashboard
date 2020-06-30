@@ -1,4 +1,8 @@
-﻿using System.Net;
+﻿using Microsoft.AspNetCore.Http;
+using MyGarmin.Dashboard.ApplicationServices;
+using System;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -14,16 +18,27 @@ namespace MyGarmin.Dashboard.Api.DelegatingHandlers
         private const string AccessToken = "17cac79c8dc9fd0c492086efbd12a8531f74cb39";
         private const string RefreshToken = "fd49bc9322481eae9becebee9e325a9efb15868e";
         private const string TokenScheme = "Bearer";
+        private readonly IHttpContextAccessor httpContextAccessor;
+        
+        public AuthenticationDelegatingHandler(
+            IHttpContextAccessor httpContextAccessor)
+        {
+            this.httpContextAccessor = httpContextAccessor;
+        }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var token = GetToken();
+            var clientId = (string)this.httpContextAccessor.HttpContext.Request.RouteValues.Single(x => x.Key == "id").Value;
+            var service = this.httpContextAccessor.HttpContext.RequestServices.GetService(typeof(IStravaConnectionService)) as IStravaConnectionService;
+            var tokens = await service.GetTokensByClientId(clientId).ConfigureAwait(false);
+
+            var token = "71b0d4cdf42c162659c8f428f93d9e1896c64beb";// tokens.Item1;
             request.Headers.Authorization = new AuthenticationHeaderValue(TokenScheme, token);
             var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
             if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
             {
-                token = GetRefreshToken();
+                token = tokens.Item2;
                 request.Headers.Authorization = new AuthenticationHeaderValue(TokenScheme, token);
                 response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
             }

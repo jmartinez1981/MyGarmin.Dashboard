@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\00_Crosscutting\MyGarmin.Dashboard.Common.Logging\MyGarmin.Dashboard.Common.Logging.csproj" />
     <ProjectReference Include="..\00_Crosscutting\MyGarmin.Dashboard.Common.Settings\MyGarmin.Dashboard.Common.Settings.csproj" />
+    <ProjectReference Include="..\01_Infrastructure\MyGarmin.Dashboard.MongoDb\MyGarmin.Dashboard.MongoDb.csproj" />
     <ProjectReference Include="..\02_Application\Connectivity\MyGarmin.Dashboard.Connectivity.GarminClient\MyGarmin.Dashboard.Connectivity.GarminClient.csproj" />
     <ProjectReference Include="..\02_Application\Connectivity\MyGarmin.Dashboard.Connectivity.StravaClient\MyGarmin.Dashboard.Connectivity.StravaClient.csproj" />
     <ProjectReference Include="..\02_Application\Services\MyGarmin.Dashboard.ApplicationServices\MyGarmin.Dashboard.ApplicationServices.csproj" />

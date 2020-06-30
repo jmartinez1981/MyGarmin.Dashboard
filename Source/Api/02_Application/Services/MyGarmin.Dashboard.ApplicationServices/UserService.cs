@@ -1,158 +1,74 @@
-﻿using MyGarmin.Dashboard.ApplicationServices.Entities;
+﻿using MyGarmin.Dashboard.ApplicationServices.DataAccess;
+using MyGarmin.Dashboard.ApplicationServices.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.ApplicationServices
 {
-    public class UserService : IUserService
+    internal class UserService : IUserService
     {
+        private readonly IUserRepository userRepository;
 
-        private static List<User> Users => new List<User>
+        public UserService(IUserRepository userRepository)
         {
-            new User
+            this.userRepository = userRepository;
+        }
+        
+        public async Task<User> GetUser(string username)
+        {
+            if (username == default)
             {
-                Id = 1,
-                Firstname = "Jose",
-                Lastname = "Martinez Fuentes",
-                Username = "jomafu",
-                Password = "noa"
-            },
-            new User
-            {
-                Id = 2,
-                Firstname = "Jose",
-                Lastname = "Martinez Fuentes",
-                Username = "jomafu2",
-                Password = "noa"
-            },
-            new User
-            {
-                Id = 3,
-                Firstname = "Jose",
-                Lastname = "Martinez Fuentes",
-                Username = "jomafu3",
-                Password = "noa"
-            },
-            new User
-            {
-                Id = 4,
-                Firstname = "Jose",
-                Lastname = "Martinez Fuentes",
-                Username = "jomafu4",
-                Password = "noa"
-            },
-            new User
-            {
-                Id = 5,
-                Firstname = "Jose",
-                Lastname = "Martinez Fuentes",
-                Username = "jomafu5",
-                Password = "noa"
-            },
-            new User
-            {
-                Id = 6,
-                Firstname = "Jose",
-                Lastname = "Martinez Fuentes",
-                Username = "jomafu6",
-                Password = "noa"
-            },
-            new User
-            {
-                Id = 7,
-                Firstname = "Jose",
-                Lastname = "Martinez Fuentes",
-                Username = "jomafu7",
-                Password = "noa"
-            },
-            new User
-            {
-                Id = 8,
-                Firstname = "Jose",
-                Lastname = "Martinez Fuentes",
-                Username = "jomafu8",
-                Password = "noa"
-            },
-            new User
-            {
-                Id = 9,
-                Firstname = "Jose",
-                Lastname = "Martinez Fuentes",
-                Username = "jomafu9",
-                Password = "noa"
-            },
-            new User
-            {
-                Id = 10,
-                Firstname = "Jose",
-                Lastname = "Martinez Fuentes",
-                Username = "jomafu10",
-                Password = "noa"
-            },
-            new User
-            {
-                Id = 11,
-                Firstname = "Jose",
-                Lastname = "Martinez Fuentes",
-                Username = "jomafu11",
-                Password = "noa"
-            },
-            new User
-            {
-                Id = 12,
-                Firstname = "Jose",
-                Lastname = "Martinez Fuentes",
-                Username = "jomafu12",
-                Password = "noa"
-            },
-            new User
-            {
-                Id = 13,
-                Firstname = "Jose",
-                Lastname = "Martinez Fuentes",
-                Username = "jomafu13",
-                Password = "noa"
-            },
-            new User
-            {
-                Id = 14,
-                Firstname = "Jose",
-                Lastname = "Martinez Fuentes",
-                Username = "jomafu14",
-                Password = "noa"
+                throw new ArgumentNullException(nameof(username));
             }
-        };
 
-        public User GetUserById(int id)
-        {
-            var user = Users.SingleOrDefault(x => x.Id == id);
-
+            var user = await this.userRepository.GetUserByUsername(username).ConfigureAwait(false);
+            
             if (user == null) return null;
+
             return user;
         }
 
-        public User GetUser(string username, string password)
+        public async Task<User> GetUser(string username, string password)
         {
-            var user = Users.SingleOrDefault(x => x.Username == username && x.Password == password);
+            if (string.IsNullOrEmpty(username))
+            {
+                throw new ArgumentNullException(nameof(username));
+            }
 
-            // return null if user not found
+            if (string.IsNullOrEmpty(password))
+            {
+                throw new ArgumentNullException(nameof(password));
+            }
+
+            var user = await this.userRepository.GetUserByUsernameAndPassword(username, password).ConfigureAwait(false);
+
             if (user == null) return null;
+
             return user;
-        } 
-
-        public Tuple<int, List<User>> GetUsers(string filter, string range, string sort)
-        {
-            return new Tuple<int, List<User>>(Users.Count, Users.Take(10).ToList());
-
-                //var count = await source.CountAsync();
-                //var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-                //return new PaginatedList<T>(items, count, pageIndex, pageSize);
         }
 
-        public Tuple<int, List<User>> GetUsers(List<string> filter, int rangeInit, int rangeEnd, string sort)
+        public async Task<Tuple<int, List<User>>> GetUsers(List<string> filter, int rangeInit, int rangeEnd, string sort)
         {
-            return new Tuple<int, List<User>>(Users.Count, Users.Take(10).ToList());
+            var users = await this.userRepository.GetAllUsers().ConfigureAwait(false);
+
+            return new Tuple<int, List<User>>(users.Count, users.Take(10).ToList());
+            //var count = await source.CountAsync();
+            //var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+            //return new PaginatedList<T>(items, count, pageIndex, pageSize);
+        }
+
+        public async Task CreateUser(User user)
+        {
+            // Check if username exists
+            if (await this.userRepository.ExistsUser(user.Username).ConfigureAwait(false))
+            {
+                throw new ArgumentException($"The user with username: {user.Username} already exists.");
+            }
+
+            // Create user
+            await this.userRepository.CreateUser(user).ConfigureAwait(false);
         }
     }
 }

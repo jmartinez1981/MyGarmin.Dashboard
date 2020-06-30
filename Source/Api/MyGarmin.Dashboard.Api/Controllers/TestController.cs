@@ -1,33 +1,44 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyGarmin.Connectivity.Client;
+using MyGarmin.Dashboard.ApplicationServices;
+using MyGarmin.Dashboard.ApplicationServices.Entities;
 using MyGarmin.Dashboard.Connectivity.StravaClient;
 using System.Threading.Tasks;
 
 namespace GarminFenixSync.Api
 {
     [Route("api/[Controller]")]
-    [Authorize]
     [ApiController]
     public class TestController : ControllerBase
     {
         private readonly IGarminClient garminClient;
-
         private readonly IStravaClient stravaClient;
+        private readonly IUserService userService;
 
-        public TestController(IGarminClient garminClient, IStravaClient stravaClient)
+        public TestController(IGarminClient garminClient, IStravaClient stravaClient, IUserService userService)
         {
             this.garminClient = garminClient;
             this.stravaClient = stravaClient;
+            this.userService = userService;
         }
 
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
-            var data = await this.stravaClient.GetAthleteData().ConfigureAwait(false);
+            var user = new User()
+            {
+                Firstname = "Jose",
+                Lastname = "Martinez Fuentes",
+                Username = "jomafu",
+                Password = "1234"
+            };
 
-            await this.garminClient.Connect().ConfigureAwait(false);
+            await this.userService.CreateUser(user).ConfigureAwait(false);
+            //var data = await this.stravaClient.GetAthleteData().ConfigureAwait(false);
+
+            //await this.garminClient.Connect().ConfigureAwait(false);
 
             return this.Ok($"id requested: {id}");
         }
