@@ -1,2 +1,2 @@
-# GarminFenixSync
-Mobile Application dashboard for Garmin Fenix 5x smartwatch
+# MyGarmin.Dashboard
+Mobile Application dashboard for Strava and Garmin data
