@@ -13,8 +13,10 @@ namespace MyGarmin.Dashboard.ApplicationServices
 
         Task<Tuple<int, List<StravaConnection>>> GetConnections(List<string> filter, int rangeInit, int rangeEnd, string sort);
 
-        Task LoadData(string clientId);
+        Task<StravaConnection> LoadData(string clientId);
 
         Task<Tuple<string, string>> GetTokensByClientId(string clientId);
+
+        Task UpdateConnection(StravaConnection connection);
     }
 }

@@ -56,6 +56,17 @@ namespace MyGarmin.Dashboard.ApplicationServices
             await this.stravaConnectionRepository.CreateConnection(connection).ConfigureAwait(false);
         }
 
+        public async Task UpdateConnection(StravaConnection connection)
+        {
+            // Check if clientId exists
+            if (!await this.stravaConnectionRepository.ExistsConnection(connection.ClientId).ConfigureAwait(false))
+            {
+                throw new ArgumentException($"The connection with clientId: {connection.ClientId} doesn't exist.");
+            }
+
+            await this.stravaConnectionRepository.UpdateConnection(connection).ConfigureAwait(false);
+        }
+
         public async Task<Tuple<string, string>> GetTokensByClientId(string clientId)
         {
             if (string.IsNullOrEmpty(clientId))
@@ -73,7 +84,7 @@ namespace MyGarmin.Dashboard.ApplicationServices
             return new Tuple<string, string>(connection.Token, connection.RefreshToken);
         }
 
-        public async Task LoadData(string clientId)
+        public async Task<StravaConnection> LoadData(string clientId)
         {
             if (string.IsNullOrEmpty(clientId))
             {
@@ -87,7 +98,14 @@ namespace MyGarmin.Dashboard.ApplicationServices
                 throw new ArgumentException($"No exists a Strava connection with clientId: {clientId}.");
             }
 
-            var athleteData = await this.stravaClient.GetAthleteData().ConfigureAwait(false);
+            //var athleteData = await this.stravaClient.GetAthleteData().ConfigureAwait(false);
+
+            connection.LastUpdate = DateTime.UtcNow;
+            connection.IsDataLoaded = true;
+
+            await this.stravaConnectionRepository.UpdateConnection(connection).ConfigureAwait(false);
+
+            return connection;
         }
     }
 }

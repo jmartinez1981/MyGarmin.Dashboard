@@ -32,7 +32,7 @@ namespace MyGarmin.Dashboard.Api.DelegatingHandlers
             var service = this.httpContextAccessor.HttpContext.RequestServices.GetService(typeof(IStravaConnectionService)) as IStravaConnectionService;
             var tokens = await service.GetTokensByClientId(clientId).ConfigureAwait(false);
 
-            var token = "71b0d4cdf42c162659c8f428f93d9e1896c64beb";// tokens.Item1;
+            var token = tokens.Item1;
             request.Headers.Authorization = new AuthenticationHeaderValue(TokenScheme, token);
             var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 

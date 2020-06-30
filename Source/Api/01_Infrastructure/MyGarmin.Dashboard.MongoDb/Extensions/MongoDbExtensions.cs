@@ -39,6 +39,7 @@ namespace MyGarmin.Dashboard.MongoDb.Extensions
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IStravaConnectionRepository, StravaConnectionRepository>();
+            services.AddScoped<IGarminConnectionRepository, GarminConnectionRepository>();
 
             return services;
         }
@@ -60,6 +61,7 @@ namespace MyGarmin.Dashboard.MongoDb.Extensions
         {
             BsonClassMap.RegisterClassMap<User>().MapIdProperty(x => x.Username);
             BsonClassMap.RegisterClassMap<StravaConnection>().MapIdProperty(x => x.ClientId);
+            BsonClassMap.RegisterClassMap<GarminConnection>().MapIdProperty(x => x.Username);
         }
     }
 }

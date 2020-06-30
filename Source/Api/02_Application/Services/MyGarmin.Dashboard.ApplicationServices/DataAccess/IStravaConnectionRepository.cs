@@ -13,5 +13,7 @@ namespace MyGarmin.Dashboard.ApplicationServices.DataAccess
         Task<List<StravaConnection>> GetAllConnections();
 
         Task CreateConnection(StravaConnection connection);
+
+        Task UpdateConnection(StravaConnection connection);
     }
 }

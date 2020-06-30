@@ -8,6 +8,8 @@ namespace MyGarmin.Dashboard.ApplicationServices.Extensions
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IStravaConnectionService, StravaConnectionService>();
+            services.AddScoped<IGarminConnectionService, GarminConnectionService>();
+            services.AddScoped<IConnectionService, ConnectionService>();
 
             return services;
         }

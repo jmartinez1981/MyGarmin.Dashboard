@@ -30,5 +30,8 @@ namespace MyGarmin.Dashboard.MongoDb
         public async Task<bool> ExistsConnection(string clientId)
             => await (await this.stravaConnectionCollection.FindAsync(x => x.ClientId == clientId).ConfigureAwait(false))
             .AnyAsync().ConfigureAwait(false);
+
+        public Task UpdateConnection(StravaConnection connection)
+            => this.stravaConnectionCollection.ReplaceOneAsync(x => x.ClientId == connection.ClientId, connection);
     }
 }
