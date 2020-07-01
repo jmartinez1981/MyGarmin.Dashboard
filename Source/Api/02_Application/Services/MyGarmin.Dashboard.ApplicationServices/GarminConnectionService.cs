@@ -72,7 +72,7 @@ namespace MyGarmin.Dashboard.ApplicationServices
                 throw new ArgumentException($"No exists a Garmin connection with username: {username}.");
             }
 
-            //var athleteData = await this.garminClient.Connect().ConfigureAwait(false);
+            await this.garminClient.GetAllActivities(connection.Username, connection.Password).ConfigureAwait(false);
 
             connection.LastUpdate = DateTime.UtcNow;
             connection.IsDataLoaded = true;

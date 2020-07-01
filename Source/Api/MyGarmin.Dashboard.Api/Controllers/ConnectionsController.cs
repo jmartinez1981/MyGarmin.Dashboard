@@ -86,7 +86,7 @@ namespace MyGarmin.Dashboard.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(ConnectionCreationModel model)
+        public async Task<IActionResult> Post(ConnectionCrudModel model)
         {
             if (model == null)
             {
@@ -128,59 +128,89 @@ namespace MyGarmin.Dashboard.Api.Controllers
         }
 
         [HttpPut("LoadData/{id}")]
-        public async Task<IActionResult> Put(string id)
+        public async Task<IActionResult> Put(string id, [FromBody] LoadDataModel model)
         {
-            if (string.IsNullOrEmpty(id))
+            if (model == null || !ModelState.IsValid || string.IsNullOrEmpty(id))
             {
                 return this.BadRequest();
             }
 
-            var connection = await this.stravaConnectionService.LoadData(id).ConfigureAwait(false);
-
-            var model = new StravaConnectionModel()
+            if (model.Type == "strava")
             {
-                Id = connection.ClientId,
-                Token = connection.Token,
-                RefreshToken = connection.RefreshToken,
-                IsDataLoaded = connection.IsDataLoaded,
-                LastUpdate = connection.LastUpdate
-            };
+                var connection = await this.stravaConnectionService.LoadData(id).ConfigureAwait(false);
 
-            await Task.Delay(5000).ConfigureAwait(false);
+                var modelUpdated = new ConnectionModel()
+                {
+                    Id = connection.ClientId,
+                    Token = connection.Token,
+                    RefreshToken = connection.RefreshToken,
+                    IsDataLoaded = connection.IsDataLoaded,
+                    LastUpdate = connection.LastUpdate
+                };
 
-            return this.Ok(model);
+                return this.Ok(modelUpdated);
+            }
+            else if (model.Type == "garmin")
+            {
+                var connection = await this.garminConnectionService.LoadData(id).ConfigureAwait(false);
+
+                var modelUpdated = new ConnectionModel()
+                {
+                    Id = connection.Username,
+                    Password = connection.Password,
+                    IsDataLoaded = connection.IsDataLoaded,
+                    LastUpdate = connection.LastUpdate
+                };
+
+                return this.Ok(modelUpdated);
+            }
+            else
+            {
+                return this.BadRequest();
+            }
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(string id, StravaConnectionUpdateModel model)
+        public async Task<IActionResult> Put(string id, ConnectionCrudModel model)
         {
             if (model == null || !ModelState.IsValid)
             {
                 return this.BadRequest();
             }
 
-            var connection = await this.stravaConnectionService.GetConnection(id).ConfigureAwait(false);
-
-            if (connection == null)
+            if (model.ConnectionType == "strava")
             {
-                return this.NotFound();
+                var connection = await this.stravaConnectionService.GetConnection(id).ConfigureAwait(false);
+
+                if (connection == null) return this.NotFound();
+
+                var modelUpdated = new ConnectionModel()
+                {
+                    Id = connection.ClientId,
+                    Token = connection.Token,
+                    RefreshToken = connection.RefreshToken,
+                    IsDataLoaded = connection.IsDataLoaded,
+                    LastUpdate = connection.LastUpdate
+                };
+                return this.Ok(modelUpdated);
             }
-
-            connection.Token = model.Token;
-            connection.RefreshToken = model.RefreshToken;
-
-            await this.stravaConnectionService.UpdateConnection(connection).ConfigureAwait(false);
-
-            var updatedModel = new StravaConnectionModel
+            else if (model.ConnectionType == "garmin")
             {
-                Id = connection.ClientId,
-                Token = connection.Token,
-                RefreshToken = connection.RefreshToken,
-                IsDataLoaded = connection.IsDataLoaded,
-                LastUpdate = connection.LastUpdate
-            };
+                var connection = await this.garminConnectionService.GetConnection(id).ConfigureAwait(false);
 
-            return this.Ok(updatedModel);
+                if (connection == null) return this.NotFound();
+
+                var modelUpdated = new ConnectionModel()
+                {
+                    Id = connection.Username,
+                    Password = connection.Password
+                };
+                return this.Ok(modelUpdated);
+            }
+            else
+            {
+                return this.BadRequest();
+            }
         }
     }
 }

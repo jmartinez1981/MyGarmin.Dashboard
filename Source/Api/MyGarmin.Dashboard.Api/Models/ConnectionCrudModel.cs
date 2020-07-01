@@ -2,8 +2,9 @@
 
 namespace MyGarmin.Dashboard.Api.Models
 {
-    public class ConnectionCreationModel
+    public class ConnectionCrudModel
     {
+        [Required]
         public string ConnectionType { get; set; }
 
         public string Id { get; set; }

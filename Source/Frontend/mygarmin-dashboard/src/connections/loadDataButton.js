@@ -7,12 +7,12 @@ const LoadDataButton = ({ record }) => {
     const [loadData, { loading }] = useMutation(
         {
             type: 'update',
-            resource: 'stravaConnections/loadData',
-            payload: { id: record.id, data: { isApproved: true } },
+            resource: 'connections/loadData',
+            payload: { id: record.id, data: { type: record.connectionType } },
         },
         {
             onSuccess: ({ data }) => {
-                redirect('/stravaConnections');
+                redirect('/connections');
                 notify('Load data successfully');
             },
             onFailure: (error) => notify(`Load data was wrong with error: ${error.message}`, 'warning'),

@@ -25,11 +25,11 @@ namespace MyGarmin.Connectivity.Client
             this.logger = logger;
         }
 
-        public async Task Connect()
+        public async Task<List<Activity>> GetAllActivities(string username, string password)
         {
             var ticket = await AuthFirstStep().ConfigureAwait(false);
             await AuthSecondStep(ticket).ConfigureAwait(false);
-            var activities = await DownloadActivities().ConfigureAwait(false);
+            return await DownloadActivities().ConfigureAwait(false);
         }
 
         private async Task<string> AuthFirstStep()
