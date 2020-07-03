@@ -5,6 +5,6 @@ namespace MyGarmin.Dashboard.Connectivity.StravaClient
 {
     public interface IStravaClient
     {
-        Task<Athlete> GetAthleteData();
+        Task<AthleteInfo> GetAthleteData();
     }
 }

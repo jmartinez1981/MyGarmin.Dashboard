@@ -2,6 +2,7 @@ import * as React from "react";
 import { List, Datagrid, TextField, SimpleForm, BooleanField, DateField, PasswordInput, TextInput, required } from 'react-admin';
 import { Edit } from 'react-admin';
 import LoadDataButton from './loadDataButton';
+import StravaAuthButton from './stravaAuthButton';
 
 export const StravaConnectionList = props => (
     <List {...props}>
@@ -9,7 +10,8 @@ export const StravaConnectionList = props => (
             <TextField label="Type" source="connectionType" />
             <TextField label="Id" source="id" />
             <BooleanField label="Data Loaded" source="isDataLoaded" />
-            <DateField label="Last update" source="lastUpdate" />
+            <DateField label="Last update" source="lastUpdate" />            
+            <StravaAuthButton/>
             <LoadDataButton />
         </Datagrid>
     </List>

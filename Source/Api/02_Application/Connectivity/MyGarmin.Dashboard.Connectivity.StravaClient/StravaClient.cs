@@ -18,14 +18,14 @@ namespace MyGarmin.Dashboard.Connectivity.StravaClient
             this.httpClient = httpClient;
         }
 
-        public async Task<Athlete> GetAthleteData()
+        public async Task<AthleteInfo> GetAthleteData()
         {
             var uri = this.httpClient.BaseAddress.AuthenticatedAthlete();
             var result = await this.httpClient.GetAsync(uri).ConfigureAwait(false);
             result.EnsureSuccessStatusCode();
             var content = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
             
-            return JsonSerializer.Deserialize<Athlete>(content);
+            return JsonSerializer.Deserialize<AthleteInfo>(content);
         }
     }
 }

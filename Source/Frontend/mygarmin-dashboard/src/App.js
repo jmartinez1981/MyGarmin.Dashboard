@@ -13,4 +13,5 @@ const App = () => (
         <Resource name="Connections" list={StravaConnectionList} edit={StravaConnectionEdit} create={StravaConectionCreate}/>
       </Admin>
   );
+
 export default App;

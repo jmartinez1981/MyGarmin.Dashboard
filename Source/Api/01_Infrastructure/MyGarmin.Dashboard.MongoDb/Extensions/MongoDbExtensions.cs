@@ -2,9 +2,10 @@
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Configuration;
-using MyGarmin.Dashboard.ApplicationServices;
 using MyGarmin.Dashboard.ApplicationServices.DataAccess;
 using MyGarmin.Dashboard.ApplicationServices.Entities;
+using MyGarmin.Dashboard.ApplicationServices.Entities.Garmin;
+using MyGarmin.Dashboard.ApplicationServices.Entities.Strava;
 
 namespace MyGarmin.Dashboard.MongoDb.Extensions
 {

@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace MyGarmin.Dashboard.Connectivity.StravaClient.Data
 {
-    public class Athlete
+    public class AthleteInfo
     {
         [JsonPropertyName("id")]
         public long Id { get; set; }
@@ -33,5 +33,14 @@ namespace MyGarmin.Dashboard.Connectivity.StravaClient.Data
         [JsonPropertyName("profile_medium")]
         [JsonConverter(typeof(CustomUriConverter))]
         public Uri ProfileImageSmall { get; set; }
+
+        [JsonPropertyName("follower_count")]
+        public int FollowerCount { get; set; }
+
+        [JsonPropertyName("friend_count")]
+        public int FriendCount { get; set; }
+
+        [JsonPropertyName("shoes")]
+        public List<ShoeInfo> Shoes { get; set; }
     }
 }

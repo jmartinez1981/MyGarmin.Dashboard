@@ -7,6 +7,9 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "aor-dependent-input": "^1.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "oidc-client": "^1.10.1",
     "prop-types": "^15.7.2",
     "ra-data-json-server": "^3.6.2",
     "ra-data-simple-rest": "^3.5.5",
@@ -16,6 +19,7 @@
     "react-router-redux": "^4.0.8",
     "react-scripts": "3.4.1"
   },
+  "proxy": "http://localhost:8080",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

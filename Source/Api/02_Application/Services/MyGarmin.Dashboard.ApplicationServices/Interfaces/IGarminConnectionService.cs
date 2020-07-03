@@ -1,4 +1,4 @@
-﻿using MyGarmin.Dashboard.ApplicationServices.Entities;
+﻿using MyGarmin.Dashboard.ApplicationServices.Entities.Garmin;
 using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.ApplicationServices

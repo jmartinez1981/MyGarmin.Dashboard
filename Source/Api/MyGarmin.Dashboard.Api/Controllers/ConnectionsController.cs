@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using MyGarmin.Dashboard.Api.Models;
 using MyGarmin.Dashboard.ApplicationServices;
 using MyGarmin.Dashboard.ApplicationServices.Entities;
+using MyGarmin.Dashboard.ApplicationServices.Entities.Garmin;
+using MyGarmin.Dashboard.ApplicationServices.Entities.Strava;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.Api.Controllers
@@ -128,14 +131,14 @@ namespace MyGarmin.Dashboard.Api.Controllers
         }
 
         [HttpPut("LoadData/{id}")]
-        public async Task<IActionResult> Put(string id, [FromBody] LoadDataModel model)
+        public async Task<IActionResult> PutLoadData(string id, [FromBody] LoadDataModel model)
         {
             if (model == null || !ModelState.IsValid || string.IsNullOrEmpty(id))
             {
                 return this.BadRequest();
             }
 
-            if (model.Type == "strava")
+            if (model.Type == "Strava")
             {
                 var connection = await this.stravaConnectionService.LoadData(id).ConfigureAwait(false);
 
@@ -150,7 +153,7 @@ namespace MyGarmin.Dashboard.Api.Controllers
 
                 return this.Ok(modelUpdated);
             }
-            else if (model.Type == "garmin")
+            else if (model.Type == "Garmin")
             {
                 var connection = await this.garminConnectionService.LoadData(id).ConfigureAwait(false);
 

@@ -1,6 +1,6 @@
 ﻿using MyGarmin.Connectivity.Client;
 using MyGarmin.Dashboard.ApplicationServices.DataAccess;
-using MyGarmin.Dashboard.ApplicationServices.Entities;
+using MyGarmin.Dashboard.ApplicationServices.Entities.Garmin;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;

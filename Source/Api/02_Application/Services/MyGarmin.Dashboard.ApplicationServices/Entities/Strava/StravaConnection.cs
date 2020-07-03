@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyGarmin.Dashboard.ApplicationServices.Entities
+namespace MyGarmin.Dashboard.ApplicationServices.Entities.Strava
 {
     public class StravaConnection
     {

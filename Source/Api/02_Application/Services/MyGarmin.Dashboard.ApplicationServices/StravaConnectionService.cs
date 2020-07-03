@@ -1,5 +1,5 @@
 ﻿using MyGarmin.Dashboard.ApplicationServices.DataAccess;
-using MyGarmin.Dashboard.ApplicationServices.Entities;
+using MyGarmin.Dashboard.ApplicationServices.Entities.Strava;
 using MyGarmin.Dashboard.Connectivity.StravaClient;
 using System;
 using System.Collections.Generic;
@@ -98,7 +98,7 @@ namespace MyGarmin.Dashboard.ApplicationServices
                 throw new ArgumentException($"No exists a Strava connection with clientId: {clientId}.");
             }
 
-            //var athleteData = await this.stravaClient.GetAthleteData().ConfigureAwait(false);
+            var athleteData = await this.stravaClient.GetAthleteData().ConfigureAwait(false);
 
             connection.LastUpdate = DateTime.UtcNow;
             connection.IsDataLoaded = true;

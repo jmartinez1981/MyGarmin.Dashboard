@@ -18,7 +18,7 @@ const LoadDataButton = ({ record }) => {
             onFailure: (error) => notify(`Load data was wrong with error: ${error.message}`, 'warning'),
         }
     );
-    return <Button label="Load data" onClick={loadData} disabled={loading} />;
+    return <Button label="Load Data" onClick={loadData} disabled={loading} />;
 };
 
 export default LoadDataButton;
