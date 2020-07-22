@@ -1,7 +1,6 @@
 ﻿using MyGarmin.Dashboard.Connectivity.StravaClient.Data.Converters;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace MyGarmin.Dashboard.Connectivity.StravaClient.Data
@@ -39,6 +38,9 @@ namespace MyGarmin.Dashboard.Connectivity.StravaClient.Data
 
         [JsonPropertyName("friend_count")]
         public int FriendCount { get; set; }
+
+        [JsonPropertyName("measurement_preference")]
+        public string MeasurementPreference { get; set; }
 
         [JsonPropertyName("shoes")]
         public List<ShoeInfo> Shoes { get; set; }

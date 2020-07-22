@@ -7,13 +7,11 @@ namespace MyGarmin.Dashboard.Api.Models
         [Required]
         public string ConnectionType { get; set; }
 
+        [Required]
         public string Id { get; set; }
 
         [DataType(DataType.Password)]
-        public string Token { get; set; }
-
-        [DataType(DataType.Password)]
-        public string RefreshToken { get; set; }
+        public string Secret { get; set; }
 
         [DataType(DataType.Password)]
         public string Password { get; set; }

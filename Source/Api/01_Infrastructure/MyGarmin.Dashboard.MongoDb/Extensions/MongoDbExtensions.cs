@@ -40,6 +40,8 @@ namespace MyGarmin.Dashboard.MongoDb.Extensions
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IStravaConnectionRepository, StravaConnectionRepository>();
+            services.AddScoped<IStravaAthleteRepository, StravaAthleteRepository>();
+            services.AddScoped<IStravaActivityRepository, StravaActivityRepository>();
             services.AddScoped<IGarminConnectionRepository, GarminConnectionRepository>();
 
             return services;

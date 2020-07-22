@@ -45,7 +45,7 @@ namespace MyGarmin.Dashboard.Api.Hosting
                 .ConfigureCors()
                 .ConfigureSettings(this.Configuration)
                 .ConfigureGarminClient()
-                .ConfigureStravaClient();
+                .ConfigureStravaClients();
 
             services
                 .ConfigureApplicationServices()

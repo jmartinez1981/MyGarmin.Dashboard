@@ -19,21 +19,10 @@ namespace MyGarmin.Dashboard.Api.Hosting.Extensions
             return services;
         }
 
-        public static IServiceCollection ConfigureStravaClient(this IServiceCollection services)
+        public static IServiceCollection ConfigureStravaClients(this IServiceCollection services)
         {
-            services.AddScoped<AuthenticationDelegatingHandler>();
-
-            services.AddHttpClient<IStravaConnectionService, StravaConnectionService>(client =>
-            {
-                client.BaseAddress = ApiV3Uri.BaseApi;
-            });
-
-
-            services.AddHttpClient<IStravaClient, StravaClient>(client =>
-            {
-                client.BaseAddress = ApiV3Uri.BaseApi;
-            })
-            .AddHttpMessageHandler<AuthenticationDelegatingHandler>();
+            ConfigureStravaAuthClient(services);
+            ConfigureStravaTokenClient(services);
 
             return services;
         }
@@ -46,6 +35,31 @@ namespace MyGarmin.Dashboard.Api.Hosting.Extensions
                 UseCookies = true,
                 CookieContainer = new CookieContainer()
             };
+        }
+
+        private static void ConfigureStravaAuthClient(IServiceCollection services)
+        {
+            services.AddScoped<StravaAuthenticationDelegatingHandler>();
+
+            //services.AddHttpClient<IStravaConnectionService, StravaConnectionService>(client =>
+            //{
+            //    client.BaseAddress = ApiV3Uri.BaseApi;
+            //});
+
+
+            services.AddHttpClient<IStravaAuthClient, StravaAuthClient>(client =>
+            {
+                client.BaseAddress = ApiV3UriExtensions.BaseApi;
+            })
+            .AddHttpMessageHandler<StravaAuthenticationDelegatingHandler>();
+        }
+
+        private static void ConfigureStravaTokenClient(IServiceCollection services)
+        {
+            services.AddHttpClient<IStravaTokenClient, StravaTokenClient>(client =>
+            {
+                client.BaseAddress = AuthUriExtensions.BaseApi;
+            });
         }
     }
 }

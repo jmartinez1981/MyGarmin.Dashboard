@@ -7,25 +7,25 @@ using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.Connectivity.StravaClient
 {
-    public class StravaClient : IStravaClient
+    public class StravaTokenClient : IStravaTokenClient
     {
-        private readonly ILogger<StravaClient> logger;
+        private readonly ILogger<StravaTokenClient> logger;
         private readonly HttpClient httpClient;
 
-        public StravaClient(ILogger<StravaClient> logger, HttpClient httpClient)
+        public StravaTokenClient(ILogger<StravaTokenClient> logger, HttpClient httpClient)
         {
             this.logger = logger;
             this.httpClient = httpClient;
         }
 
-        public async Task<AthleteInfo> GetAthleteData()
+        public async Task<ExchangeTokenInfo> GetExchangeToken(string clientId, string clientSecret, string code)
         {
-            var uri = this.httpClient.BaseAddress.AuthenticatedAthlete();
-            var result = await this.httpClient.GetAsync(uri).ConfigureAwait(false);
+            var uri = this.httpClient.BaseAddress.ExchangeAuthToken(clientId, clientSecret, code);
+            var result = await this.httpClient.PostAsync(uri, null).ConfigureAwait(false);
             result.EnsureSuccessStatusCode();
             var content = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
             
-            return JsonSerializer.Deserialize<AthleteInfo>(content);
+            return JsonSerializer.Deserialize<ExchangeTokenInfo>(content);
         }
     }
 }

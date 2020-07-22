@@ -1,7 +1,7 @@
 ﻿using MyGarmin.Dashboard.ApplicationServices.Entities.Garmin;
 using System.Threading.Tasks;
 
-namespace MyGarmin.Dashboard.ApplicationServices
+namespace MyGarmin.Dashboard.ApplicationServices.Interfaces
 {
     public interface IGarminConnectionService
     {

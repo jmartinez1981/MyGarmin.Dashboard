@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using MyGarmin.Dashboard.ApplicationServices;
-using System;
+using MyGarmin.Dashboard.ApplicationServices.Interfaces;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -13,14 +12,15 @@ namespace MyGarmin.Dashboard.Api.DelegatingHandlers
     /// <summary>
     /// Its base on: https://stackoverflow.com/questions/56204350/how-to-refresh-a-token-using-ihttpclientfactory
     /// </summary>
-    public class AuthenticationDelegatingHandler : DelegatingHandler
+    public class StravaAuthenticationDelegatingHandler : DelegatingHandler
     {
         private const string AccessToken = "17cac79c8dc9fd0c492086efbd12a8531f74cb39";
         private const string RefreshToken = "fd49bc9322481eae9becebee9e325a9efb15868e";
         private const string TokenScheme = "Bearer";
+
         private readonly IHttpContextAccessor httpContextAccessor;
-        
-        public AuthenticationDelegatingHandler(
+
+        public StravaAuthenticationDelegatingHandler(
             IHttpContextAccessor httpContextAccessor)
         {
             this.httpContextAccessor = httpContextAccessor;

@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyGarmin.Dashboard.Api.Models;
-using MyGarmin.Dashboard.ApplicationServices;
 using MyGarmin.Dashboard.ApplicationServices.Entities;
+using MyGarmin.Dashboard.ApplicationServices.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.Api.Controllers

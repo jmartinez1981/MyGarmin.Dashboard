@@ -9,7 +9,7 @@ const types=[
     { id: 'garmin', name: 'Garmin', full_name: 'Garmin Connect' }
 ];
 
-export const StravaConectionCreate = props => (
+export const ConnectionCreate = props => (
     <Create {...props}>
         <SimpleForm>
             <RadioButtonGroupInput source="connectionType"  choices={types} optionText="full_name" optionValue="id"/>    
@@ -25,17 +25,12 @@ export const StravaConectionCreate = props => (
              </FormDataConsumer>
              <FormDataConsumer>
                  {({ formData, ...rest }) => formData.connectionType === 'strava' &&
-                      <TextInput source="id" label="ClientId" validate={required()} {...rest} />
+                      <TextInput source="id" label="Client Identifier" validate={required()} {...rest} />
                  }
              </FormDataConsumer>
              <FormDataConsumer>
                 {({ formData, ...rest }) => formData.connectionType === 'strava' &&
-                      <PasswordInput source="token" label="Token" validate={required()} {...rest} />
-                 }
-             </FormDataConsumer>
-             <FormDataConsumer>
-                {({ formData, ...rest }) => formData.connectionType === 'strava' &&
-                      <PasswordInput source="refreshToken" label="Refresh token" validate={required()} {...rest} />
+                      <PasswordInput source="secret" label="Client secret" validate={required()} {...rest} />
                  }
              </FormDataConsumer>
         </SimpleForm>

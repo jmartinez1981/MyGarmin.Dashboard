@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using MyGarmin.Dashboard.ApplicationServices.Interfaces;
 
 namespace MyGarmin.Dashboard.ApplicationServices.Extensions
 {
@@ -8,6 +9,7 @@ namespace MyGarmin.Dashboard.ApplicationServices.Extensions
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IStravaConnectionService, StravaConnectionService>();
+            services.AddScoped<IStravaImportService, StravaImportService>();
             services.AddScoped<IGarminConnectionService, GarminConnectionService>();
             services.AddScoped<IConnectionService, ConnectionService>();
 

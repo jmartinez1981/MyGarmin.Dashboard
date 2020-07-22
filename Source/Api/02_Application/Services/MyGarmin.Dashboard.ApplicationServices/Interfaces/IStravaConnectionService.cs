@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MyGarmin.Dashboard.ApplicationServices
+namespace MyGarmin.Dashboard.ApplicationServices.Interfaces
 {
     public interface IStravaConnectionService
     {
@@ -13,10 +13,12 @@ namespace MyGarmin.Dashboard.ApplicationServices
 
         Task<Tuple<int, List<StravaConnection>>> GetConnections(List<string> filter, int rangeInit, int rangeEnd, string sort);
 
-        Task<StravaConnection> LoadData(string clientId);
+        Task UpdateConnection(StravaConnection connection);
+
+        Task<StravaConnection> UpdateCredentials(string clientId, string code);
 
         Task<Tuple<string, string>> GetTokensByClientId(string clientId);
 
-        Task UpdateConnection(StravaConnection connection);
+        Task<StravaConnection> MarkConnectionAsUpdated(string clientId);
     }
 }

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MyGarmin.Dashboard.ApplicationServices
+namespace MyGarmin.Dashboard.ApplicationServices.Interfaces
 {
     public interface IConnectionService
     {

@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyGarmin.Connectivity.Client;
-using MyGarmin.Dashboard.ApplicationServices;
 using MyGarmin.Dashboard.ApplicationServices.Entities;
+using MyGarmin.Dashboard.ApplicationServices.Interfaces;
 using MyGarmin.Dashboard.Connectivity.StravaClient;
 using System.Threading.Tasks;
 
@@ -13,10 +12,10 @@ namespace GarminFenixSync.Api
     public class TestController : ControllerBase
     {
         private readonly IGarminClient garminClient;
-        private readonly IStravaClient stravaClient;
+        private readonly IStravaAuthClient stravaClient;
         private readonly IUserService userService;
 
-        public TestController(IGarminClient garminClient, IStravaClient stravaClient, IUserService userService)
+        public TestController(IGarminClient garminClient, IStravaAuthClient stravaClient, IUserService userService)
         {
             this.garminClient = garminClient;
             this.stravaClient = stravaClient;

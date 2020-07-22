@@ -2,7 +2,7 @@
 
 namespace MyGarmin.Dashboard.Connectivity.StravaClient.Uris
 {
-    public static class ApiV3Uri
+    public static class ApiV3UriExtensions
     {
         private const string Hostname = "www.strava.com";
 
