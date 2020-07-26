@@ -13,9 +13,9 @@ namespace GarminFenixSync.Api
     {
         private readonly IGarminClient garminClient;
         private readonly IStravaAuthClient stravaClient;
-        private readonly IUserService userService;
+        private readonly IUsersService userService;
 
-        public TestController(IGarminClient garminClient, IStravaAuthClient stravaClient, IUserService userService)
+        public TestController(IGarminClient garminClient, IStravaAuthClient stravaClient, IUsersService userService)
         {
             this.garminClient = garminClient;
             this.stravaClient = stravaClient;

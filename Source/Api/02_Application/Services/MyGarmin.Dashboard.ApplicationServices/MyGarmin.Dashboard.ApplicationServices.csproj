@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\00_Crosscutting\MyGarmin.Dashboard.Common.Settings\MyGarmin.Dashboard.Common.Settings.csproj" />
     <ProjectReference Include="..\..\Connectivity\MyGarmin.Dashboard.Connectivity.GarminClient\MyGarmin.Dashboard.Connectivity.GarminClient.csproj" />
     <ProjectReference Include="..\..\Connectivity\MyGarmin.Dashboard.Connectivity.StravaClient\MyGarmin.Dashboard.Connectivity.StravaClient.csproj" />
   </ItemGroup>

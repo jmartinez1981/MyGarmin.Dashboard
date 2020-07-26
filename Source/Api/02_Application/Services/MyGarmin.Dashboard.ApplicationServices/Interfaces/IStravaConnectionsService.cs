@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.ApplicationServices.Interfaces
 {
-    public interface IStravaConnectionService
+    public interface IStravaConnectionsService
     {
         Task CreateConnection(StravaConnection connection);
 
@@ -17,7 +17,11 @@ namespace MyGarmin.Dashboard.ApplicationServices.Interfaces
 
         Task<StravaConnection> UpdateCredentials(string clientId, string code);
 
+        Task<StravaConnection> GetConnectionBySubscriptionId(long subscriptionId);
+
         Task<Tuple<string, string>> GetTokensByClientId(string clientId);
+
+        Task<Tuple<string, string>> GetTokensBySubscriptionId(long subscriptionId);
 
         Task<StravaConnection> MarkConnectionAsUpdated(string clientId);
     }

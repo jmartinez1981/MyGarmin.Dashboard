@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.ApplicationServices.DataAccess
 {
-    public interface IStravaAthleteRepository
+    public interface IStravaAthletesRepository
     {
         Task<Athlete> GetAthleteById(long id);
 

@@ -11,5 +11,7 @@ namespace MyGarmin.Dashboard.Connectivity.StravaClient
         Task<GearInfo> GetEquipmentDetail(string equipmentId);
 
         Task<List<ActivityInfo>> GetActivities(long athleteId);
+
+        Task<ActivityInfo> GetActivity(long activityId);
     }
 }

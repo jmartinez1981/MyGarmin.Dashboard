@@ -22,7 +22,9 @@ namespace MyGarmin.Dashboard.Api.Hosting.Extensions
         public static IServiceCollection ConfigureStravaClients(this IServiceCollection services)
         {
             ConfigureStravaAuthClient(services);
+            ConfigureStravaWebhookClient(services);
             ConfigureStravaTokenClient(services);
+            ConfigureStravaSubscriptionClient(services);
 
             return services;
         }
@@ -37,15 +39,28 @@ namespace MyGarmin.Dashboard.Api.Hosting.Extensions
             };
         }
 
+        private static void ConfigureStravaSubscriptionClient(IServiceCollection services)
+        {
+            services.AddHttpClient<IStravaSubscriptionClient, StravaSubscriptionClient>(client =>
+            {
+                client.BaseAddress = ApiV3UriExtensions.BaseApi;
+            });
+        }
+
+        private static void ConfigureStravaWebhookClient(IServiceCollection services)
+        {
+            services.AddScoped<StravaWebhookDelegatingHandler>();
+
+            services.AddHttpClient<IStravaWebhookClient, StravaWebhookClient>(client =>
+            {
+                client.BaseAddress = ApiV3UriExtensions.BaseApi;
+            })
+            .AddHttpMessageHandler<StravaWebhookDelegatingHandler>();
+        }
+
         private static void ConfigureStravaAuthClient(IServiceCollection services)
         {
             services.AddScoped<StravaAuthenticationDelegatingHandler>();
-
-            //services.AddHttpClient<IStravaConnectionService, StravaConnectionService>(client =>
-            //{
-            //    client.BaseAddress = ApiV3Uri.BaseApi;
-            //});
-
 
             services.AddHttpClient<IStravaAuthClient, StravaAuthClient>(client =>
             {

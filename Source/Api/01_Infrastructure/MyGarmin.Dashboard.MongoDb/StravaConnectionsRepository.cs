@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.MongoDb
 {
-    internal class StravaConnectionRepository : IStravaConnectionRepository
+    internal class StravaConnectionsRepository : IStravaConnectionsRepository
     {
         internal const string CollectionName = "StravaConnections";
         private readonly IMongoCollection<StravaConnection> stravaConnectionCollection;
 
-        public StravaConnectionRepository(
+        public StravaConnectionsRepository(
             IMongoDatabase mongoDatabase)
         {
             this.stravaConnectionCollection = mongoDatabase.GetCollection<StravaConnection>(CollectionName);
@@ -20,6 +20,10 @@ namespace MyGarmin.Dashboard.MongoDb
 
         public async Task<StravaConnection> GetConnectionByClientId(string clientId)
             => await (await this.stravaConnectionCollection.FindAsync(x => x.ClientId == clientId).ConfigureAwait(false))
+            .FirstOrDefaultAsync().ConfigureAwait(false);
+
+        public async Task<StravaConnection> GetConnectionBySubscriptionId(long subscriptionId)
+            => await (await this.stravaConnectionCollection.FindAsync(x => x.WebhookSubscriptionId == subscriptionId).ConfigureAwait(false))
             .FirstOrDefaultAsync().ConfigureAwait(false);
 
         public Task<List<StravaConnection>> GetAllConnections()

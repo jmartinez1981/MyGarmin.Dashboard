@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.MongoDb
 {
-    internal class UserRepository : IUserRepository
+    internal class UserRepository : IUsersRepository
     {
         internal const string CollectionName = "Users";
         private readonly IMongoCollection<User> userCollection;

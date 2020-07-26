@@ -13,9 +13,9 @@ namespace MyGarmin.Dashboard.Api.Controllers
     [Authorize]
     public class UsersController : ControllerBase
     {
-        private readonly IUserService userService;
+        private readonly IUsersService userService;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUsersService userService)
         {
             this.userService = userService;
         }

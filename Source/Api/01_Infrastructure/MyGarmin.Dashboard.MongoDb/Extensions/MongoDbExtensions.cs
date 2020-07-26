@@ -38,11 +38,11 @@ namespace MyGarmin.Dashboard.MongoDb.Extensions
 
         public static IServiceCollection AddDataAccessServices(this IServiceCollection services)
         {
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IStravaConnectionRepository, StravaConnectionRepository>();
-            services.AddScoped<IStravaAthleteRepository, StravaAthleteRepository>();
-            services.AddScoped<IStravaActivityRepository, StravaActivityRepository>();
-            services.AddScoped<IGarminConnectionRepository, GarminConnectionRepository>();
+            services.AddScoped<IUsersRepository, UserRepository>();
+            services.AddScoped<IStravaConnectionsRepository, StravaConnectionsRepository>();
+            services.AddScoped<IStravaAthletesRepository, StravaAthletesRepository>();
+            services.AddScoped<IStravaActivitiesRepository, StravaActivitiesRepository>();
+            services.AddScoped<IGarminConnectionsRepository, GarminConnectionsRepository>();
 
             return services;
         }

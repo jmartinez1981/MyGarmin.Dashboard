@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.ApplicationServices.Interfaces
 {
-    public interface IConnectionService
+    public interface IConnectionsService
     {
         Task<Tuple<int, List<Connection>>> GetAllConnections();
     }

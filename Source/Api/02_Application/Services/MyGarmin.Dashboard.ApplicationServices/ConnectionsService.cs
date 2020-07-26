@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.ApplicationServices
 {
-    public class ConnectionService : IConnectionService
+    public class ConnectionsService : IConnectionsService
     {
-        private readonly IGarminConnectionRepository garminConnectionRepository;
-        private readonly IStravaConnectionRepository stravaConnectionRepository;
+        private readonly IGarminConnectionsRepository garminConnectionRepository;
+        private readonly IStravaConnectionsRepository stravaConnectionRepository;
 
-        public ConnectionService(
-            IGarminConnectionRepository garminConnectionRepository,
-            IStravaConnectionRepository stravaConnectionRepository)
+        public ConnectionsService(
+            IGarminConnectionsRepository garminConnectionRepository,
+            IStravaConnectionsRepository stravaConnectionRepository)
         {
             this.garminConnectionRepository = garminConnectionRepository;
             this.stravaConnectionRepository = stravaConnectionRepository;

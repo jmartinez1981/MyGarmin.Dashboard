@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.ApplicationServices.Interfaces
 {
-    public interface IUserService
+    public interface IUsersService
     {
         Task<User> GetUser(string username);
 

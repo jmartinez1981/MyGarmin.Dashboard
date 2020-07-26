@@ -7,11 +7,14 @@ namespace MyGarmin.Dashboard.ApplicationServices.Extensions
     {
         public static IServiceCollection ConfigureApplicationServices(this IServiceCollection services)
         {
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IStravaConnectionService, StravaConnectionService>();
+            services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<IStravaConnectionsService, StravaConnectionsService>();
             services.AddScoped<IStravaImportService, StravaImportService>();
-            services.AddScoped<IGarminConnectionService, GarminConnectionService>();
-            services.AddScoped<IConnectionService, ConnectionService>();
+            services.AddScoped<IStravaSubscriptionsService, StravaSubscriptionsService>();
+            services.AddScoped<IStravaActivitiesService, StravaActivitiesService>();
+            services.AddScoped<IStravaAthletesService, StravaAthletesService>();
+            services.AddScoped<IGarminConnectionService, GarminConnectionsService>();
+            services.AddScoped<IConnectionsService, ConnectionsService>();
 
             return services;
         }

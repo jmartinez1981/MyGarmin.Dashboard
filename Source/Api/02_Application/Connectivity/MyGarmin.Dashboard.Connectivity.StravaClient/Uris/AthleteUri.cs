@@ -11,6 +11,8 @@ namespace MyGarmin.Dashboard.Connectivity.StravaClient.Uris
             return new Uri(uri, $"gear/{id}");
         }
 
+        public static Uri Activity(this Uri uri, long activityId) => new Uri(uri, $"activities/{activityId}");
+
         public static Uri Activities(this Uri uri, string athleteId, int pageNumber, int dataPerPage)
         {
             return

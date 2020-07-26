@@ -10,6 +10,7 @@ import authRestProvider from './dataProviders/authRestProvider';
 import Dashboard from './dashboard/DashboardPage';
 import authProvider from './dataProviders/authProvider';
 import stravaAuthCallback from './connections/stravaAuthCallback';
+import stravaWebhook from './connections/stravaWebhook';
 import cubejs from "@cubejs-client/core";
 import { CubeProvider } from "@cubejs-client/react";
 import WebSocketTransport from "@cubejs-client/ws-transport";
@@ -49,6 +50,10 @@ const App = () => (
             path="/stravaAuthCallback"
             component={stravaAuthCallback}
         />,
+        <Route
+            path="/webhook"
+            component={stravaAuthCallback}
+        />
         ]}
         >       
         <Resource name="Users" list={UserList} edit={UserEdit} create={UserCreate}/>

@@ -4,10 +4,14 @@ using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.ApplicationServices.DataAccess
 {
-    public interface IStravaActivityRepository
+    public interface IStravaActivitiesRepository
     {
         Task<Activity> GetRouteById(long id);
 
-        Task CreateActivities(List<Activity> routes);
+        Task CreateActivity(Activity activity);
+
+        Task CreateActivities(List<Activity> activities);
+
+        Task DeleteActivity(long activityId);
     }
 }

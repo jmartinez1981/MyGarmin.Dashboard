@@ -41,6 +41,17 @@ namespace MyGarmin.Dashboard.Connectivity.StravaClient
             return JsonSerializer.Deserialize<GearInfo>(content);
         }
 
+        public async Task<ActivityInfo> GetActivity(long activityId)
+        {
+            var uri = this.httpClient.BaseAddress.Activity(activityId);
+
+            var result = await this.httpClient.GetAsync(uri).ConfigureAwait(false);
+            result.EnsureSuccessStatusCode();
+            var content = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+            
+            return JsonSerializer.Deserialize<ActivityInfo>(content);
+        }
+
         public async Task<List<ActivityInfo>> GetActivities(long athleteId)
         {
             var allRoutes = new List<ActivityInfo>();

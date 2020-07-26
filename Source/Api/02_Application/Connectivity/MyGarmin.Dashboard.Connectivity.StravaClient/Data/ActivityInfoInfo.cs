@@ -1,5 +1,4 @@
-﻿using MyGarmin.Dashboard.Connectivity.StravaClient.Data.Converters;
-using System;
+﻿using System;
 using System.Text.Json.Serialization;
 
 namespace MyGarmin.Dashboard.Connectivity.StravaClient.Data
@@ -11,6 +10,9 @@ namespace MyGarmin.Dashboard.Connectivity.StravaClient.Data
 
         [JsonPropertyName("name")]
         public string Name { get; set; }
+
+        [JsonPropertyName("type")]
+        public string ActivityType { get; set; }
 
         [JsonPropertyName("distance")]
         public float Distance { get; set; }

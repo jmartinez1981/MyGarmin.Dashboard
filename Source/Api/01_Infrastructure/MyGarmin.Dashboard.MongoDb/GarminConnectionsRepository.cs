@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.MongoDb
 {
-    internal class GarminConnectionRepository : IGarminConnectionRepository
+    internal class GarminConnectionsRepository : IGarminConnectionsRepository
     {
         internal const string CollectionName = "GarminConnections";
         private readonly IMongoCollection<GarminConnection> garminConnectionCollection;
 
-        public GarminConnectionRepository(
+        public GarminConnectionsRepository(
             IMongoDatabase mongoDatabase)
         {
             this.garminConnectionCollection = mongoDatabase.GetCollection<GarminConnection>(CollectionName);

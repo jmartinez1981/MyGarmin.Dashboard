@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.ApplicationServices.DataAccess
 {
-    public interface IUserRepository
+    public interface IUsersRepository
     {
         Task<List<User>> GetAllUsers();
 

@@ -19,10 +19,10 @@ namespace MyGarmin.Dashboard.Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IUserService userService;
+        private readonly IUsersService userService;
         private readonly IOptions<AuthenticationSettings> authSettings;
 
-        public AuthController(IUserService userService, IOptions<AuthenticationSettings> authSettings)
+        public AuthController(IUsersService userService, IOptions<AuthenticationSettings> authSettings)
         {
             this.userService = userService;
             this.authSettings = authSettings;

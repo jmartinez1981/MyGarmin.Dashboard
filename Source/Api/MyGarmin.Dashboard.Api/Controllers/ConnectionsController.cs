@@ -16,18 +16,18 @@ namespace MyGarmin.Dashboard.Api.Controllers
     [Authorize]
     public class ConnectionsController : ControllerBase
     {
-        private readonly IStravaConnectionService stravaConnectionService;
+        private readonly IStravaConnectionsService stravaConnectionsService;
         private readonly IStravaImportService stravaImportService;
         private readonly IGarminConnectionService garminConnectionService;
-        private readonly IConnectionService connectionService;
+        private readonly IConnectionsService connectionService;
 
         public ConnectionsController(
-            IStravaConnectionService stravaConnectionService,
+            IStravaConnectionsService stravaConnectionsService,
             IStravaImportService stravaImportService,
             IGarminConnectionService garminConnectionService,
-            IConnectionService connectionService)
+            IConnectionsService connectionService)
         {
-            this.stravaConnectionService = stravaConnectionService;
+            this.stravaConnectionsService = stravaConnectionsService;
             this.stravaImportService = stravaImportService;
             this.garminConnectionService = garminConnectionService;
             this.connectionService = connectionService;
@@ -43,7 +43,7 @@ namespace MyGarmin.Dashboard.Api.Controllers
 
             ConnectionModel model = new ConnectionModel();
 
-            var stravaConnection = await this.stravaConnectionService.GetConnection(id).ConfigureAwait(false);
+            var stravaConnection = await this.stravaConnectionsService.GetConnection(id).ConfigureAwait(false);
 
             if (stravaConnection == null)
             {
@@ -111,12 +111,7 @@ namespace MyGarmin.Dashboard.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(ConnectionCrudModel model)
         {
-            if (model == null)
-            {
-                return this.BadRequest();
-            }
-
-            if (!ModelState.IsValid)
+            if (model == null || !ModelState.IsValid)
             {
                 return this.BadRequest();
             }
@@ -129,7 +124,7 @@ namespace MyGarmin.Dashboard.Api.Controllers
                     Secret = model.Secret,
                 };
 
-                await this.stravaConnectionService.CreateConnection(connection).ConfigureAwait(false);
+                await this.stravaConnectionsService.CreateConnection(connection).ConfigureAwait(false);
             }
             else if (model.ConnectionType == "garmin")
             {
@@ -168,7 +163,7 @@ namespace MyGarmin.Dashboard.Api.Controllers
             {                
                 await this.stravaImportService.ImportData(id, model.code).ConfigureAwait(false);
 
-                var connection = await this.stravaConnectionService.GetConnection(id).ConfigureAwait(false);
+                var connection = await this.stravaConnectionsService.GetConnection(id).ConfigureAwait(false);
 
                 var modelUpdated = new ConnectionModel()
                 {
@@ -209,12 +204,12 @@ namespace MyGarmin.Dashboard.Api.Controllers
 
             if (model.ConnectionType == "strava")
             {
-                var connection = await this.stravaConnectionService.GetConnection(id).ConfigureAwait(false);
+                var connection = await this.stravaConnectionsService.GetConnection(id).ConfigureAwait(false);
 
                 if (connection == null) return this.NotFound();
 
                 connection.Secret = model.Secret;
-                await this.stravaConnectionService.UpdateConnection(connection).ConfigureAwait(false);
+                await this.stravaConnectionsService.UpdateConnection(connection).ConfigureAwait(false);
 
                 var modelUpdated = new ConnectionModel()
                 {

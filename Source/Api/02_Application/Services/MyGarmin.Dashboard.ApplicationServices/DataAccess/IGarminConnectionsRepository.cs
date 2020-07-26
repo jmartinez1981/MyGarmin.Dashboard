@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.ApplicationServices.DataAccess
 {
-    public interface IGarminConnectionRepository
+    public interface IGarminConnectionsRepository
     {
         Task<bool> ExistsConnection(string username);
 

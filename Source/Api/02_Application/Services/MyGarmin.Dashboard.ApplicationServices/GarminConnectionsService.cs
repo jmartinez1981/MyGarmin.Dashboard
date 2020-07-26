@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.ApplicationServices
 {
-    public class GarminConnectionService : IGarminConnectionService
+    public class GarminConnectionsService : IGarminConnectionService
     {
-        private readonly IGarminConnectionRepository garminConnectionRepository;
+        private readonly IGarminConnectionsRepository garminConnectionRepository;
         private readonly HttpClient httpClient;
         private readonly IGarminClient garminClient;
 
-        public GarminConnectionService(
-            IGarminConnectionRepository garminConnectionRepository,
+        public GarminConnectionsService(
+            IGarminConnectionsRepository garminConnectionRepository,
             IGarminClient garminClient)
         {
             this.garminConnectionRepository = garminConnectionRepository;

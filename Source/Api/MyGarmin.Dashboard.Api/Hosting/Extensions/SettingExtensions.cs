@@ -17,6 +17,7 @@ namespace MyGarmin.Dashboard.Api.Hosting.Extensions
 
             services.Configure<ServerSettings>(configuration.GetSection("AppSettings:Server"));
             services.Configure<GarminConnectionSettings>(configuration.GetSection("AppSettings:GarminConnection"));
+            services.Configure<StravaConnectionSettings>(configuration.GetSection("AppSettings:StravaConnection"));
             services.Configure<AuthenticationSettings>(configuration.GetSection("AppSettings:Authentication"));
 
             services.Configure<HostOptions>(

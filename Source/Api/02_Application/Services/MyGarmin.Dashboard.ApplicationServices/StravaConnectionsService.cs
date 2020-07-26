@@ -1,4 +1,5 @@
-﻿using MyGarmin.Dashboard.ApplicationServices.DataAccess;
+﻿using Microsoft.Extensions.Logging;
+using MyGarmin.Dashboard.ApplicationServices.DataAccess;
 using MyGarmin.Dashboard.ApplicationServices.Entities.Strava;
 using MyGarmin.Dashboard.ApplicationServices.Interfaces;
 using MyGarmin.Dashboard.Connectivity.StravaClient;
@@ -9,17 +10,23 @@ using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.ApplicationServices
 {
-    public class StravaConnectionService : IStravaConnectionService
+    public class StravaConnectionsService : IStravaConnectionsService
     {
-        private readonly IStravaConnectionRepository stravaConnectionRepository;
+        private readonly IStravaConnectionsRepository stravaConnectionRepository;
         private readonly IStravaTokenClient stravaTokenClient;
+        private readonly IStravaSubscriptionsService stravaSubscriptionService;
+        private readonly ILogger<StravaConnectionsService> logger;
 
-        public StravaConnectionService(
-            IStravaConnectionRepository stravaConnectionRepository,
-            IStravaTokenClient stravaTokenClient)
+        public StravaConnectionsService(
+            IStravaConnectionsRepository stravaConnectionRepository,
+            IStravaTokenClient stravaTokenClient,
+            IStravaSubscriptionsService stravaSubscriptionService,
+            ILogger<StravaConnectionsService> logger)
         {
             this.stravaConnectionRepository = stravaConnectionRepository;
             this.stravaTokenClient = stravaTokenClient;
+            this.stravaSubscriptionService = stravaSubscriptionService;
+            this.logger = logger;
         }
 
         public async Task<StravaConnection> GetConnection(string clientId)
@@ -51,8 +58,48 @@ namespace MyGarmin.Dashboard.ApplicationServices
                 throw new ArgumentException($"The connection with clientId: {connection.ClientId} already exists.");
             }
 
+            // Create webhook subscription
+            var subscriptionId = await this.stravaSubscriptionService.Subscribe(connection.ClientId, connection.Secret).ConfigureAwait(false);
+            connection.WebhookSubscriptionId = subscriptionId;
+
             // Create connection
             await this.stravaConnectionRepository.CreateConnection(connection).ConfigureAwait(false);
+
+            this.logger.LogInformation($"Strava connection created successfully. Id: {connection.ClientId}");
+        }
+
+        public async Task<StravaConnection> GetConnectionBySubscriptionId(long subscriptionId)
+        {
+            if (subscriptionId == default)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            var connection = await this.stravaConnectionRepository.GetConnectionBySubscriptionId(subscriptionId).ConfigureAwait(false);
+
+            if (connection == null)
+            {
+                throw new ArgumentException($"No exists a Strava connection with SubscriptionId: {subscriptionId}.");
+            }
+
+            return connection;
+        }
+
+        public async Task<Tuple<string, string>> GetTokensBySubscriptionId(long subscriptionId)
+        {
+            if (subscriptionId == default)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+
+            var connection = await this.stravaConnectionRepository.GetConnectionBySubscriptionId(subscriptionId).ConfigureAwait(false);
+
+            if (connection == null)
+            {
+                throw new ArgumentException($"No exists a Strava connection with subscriptionId: {subscriptionId}.");
+            }
+
+            return new Tuple<string, string>(connection.Token, connection.RefreshToken);
         }
 
         public async Task<Tuple<string, string>> GetTokensByClientId(string clientId)

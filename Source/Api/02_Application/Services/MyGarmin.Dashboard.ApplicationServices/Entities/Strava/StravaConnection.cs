@@ -10,6 +10,8 @@ namespace MyGarmin.Dashboard.ApplicationServices.Entities.Strava
 
         public string Token { get; set; }
 
+        public long WebhookSubscriptionId { get; set; }
+
         public string RefreshToken { get; set; }
 
         public DateTime TokenExpirationDate { get; set; }

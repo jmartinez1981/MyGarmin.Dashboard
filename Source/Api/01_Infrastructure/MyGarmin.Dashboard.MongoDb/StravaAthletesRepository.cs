@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.MongoDb
 {
-    internal class StravaAthleteRepository : IStravaAthleteRepository
+    internal class StravaAthletesRepository : IStravaAthletesRepository
     {
         internal const string CollectionName = "Athletes";
         private readonly IMongoCollection<Athlete> athleteCollection;
 
-        public StravaAthleteRepository(
+        public StravaAthletesRepository(
             IMongoDatabase mongoDatabase)
         {
             this.athleteCollection = mongoDatabase.GetCollection<Athlete>(CollectionName);

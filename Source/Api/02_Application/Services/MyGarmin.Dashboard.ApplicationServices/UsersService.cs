@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace MyGarmin.Dashboard.ApplicationServices
 {
-    internal class UserService : IUserService
+    internal class UsersService : IUsersService
     {
-        private readonly IUserRepository userRepository;
+        private readonly IUsersRepository userRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UsersService(IUsersRepository userRepository)
         {
             this.userRepository = userRepository;
         }

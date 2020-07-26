@@ -8,6 +8,8 @@ namespace MyGarmin.Dashboard.ApplicationServices.Entities.Strava
 
         public string ClientId { get; private set; }
 
+        public string ActivityType { get; private set; }
+
         public string Name { get; private set; }
 
         public float Distance { get; private set; }
@@ -29,11 +31,13 @@ namespace MyGarmin.Dashboard.ApplicationServices.Entities.Strava
         public Activity(
             long id,
             string clientId,
-            string name)
+            string name,
+            string activityType)
         {
             this.Id = id;
             this.ClientId = clientId;
             this.Name = name;
+            this.ActivityType = activityType;
         }
 
         public void SetGearData(string gearId, float distance)
