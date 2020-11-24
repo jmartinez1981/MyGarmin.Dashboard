@@ -5,16 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using MyGarmin.Connectivity.Client;
-using MyGarmin.Dashboard.Api.DelegatingHandlers;
+using MyGarmin.Dashboard.Api.Hosting.Extensions;
 using MyGarmin.Dashboard.Api.Middlewares.ErrorHandling;
-using MyGarmin.Dashboard.Api.Middlewares.RequestAndResponse;
-using MyGarmin.Dashboard.Api.Settings;
-using MyGarmin.Dashboard.Connectivity.StravaClient;
-using MyGarmin.Dashboard.Connectivity.StravaClient.Uris;
-using System;
-using System.Net;
-using System.Net.Http;
+using MyGarmin.Dashboard.ApplicationServices.Extensions;
+using Serilog;
 
 namespace MyGarmin.Dashboard.Api.Hosting
 {
@@ -45,22 +39,17 @@ namespace MyGarmin.Dashboard.Api.Hosting
         {
             services.AddControllers();
 
-            services.Configure<ServerSettings>(this.Configuration.GetSection("AppSettings:Server"));
-            services.Configure<GarminConnectionSettings>(this.Configuration.GetSection("AppSettings:GarminConnection"));
+            services
+                .AddHttpContextAccessor()
+                .ConfigureAuthorization(this.Configuration)
+                .ConfigureCors()
+                .ConfigureSettings(this.Configuration)
+                .ConfigureGarminClient()
+                .ConfigureStravaClients();
 
-            services.Configure<HostOptions>(
-                    opts => opts.ShutdownTimeout = this.Configuration.GetValue<TimeSpan>("ServerSettings:ShutdownTimeout"));
-
-            services.AddHttpClient<IGarminClient, GarminClient>()
-                .ConfigurePrimaryHttpMessageHandler(() => ConfigureGarminClientMessageHandler());
-
-            services.AddHttpClient<IStravaClient, StravaClient>(client =>
-            {
-                client.BaseAddress = ApiV3Uri.BaseApi;
-            })
-            .AddHttpMessageHandler<AuthenticationDelegatingHandler>();
-
-            services.AddScoped<AuthenticationDelegatingHandler>();
+            services
+                .ConfigureApplicationServices()
+                .ConfigureDataAccess(this.Configuration);
         }
 
         /// <summary>
@@ -78,18 +67,24 @@ namespace MyGarmin.Dashboard.Api.Hosting
             lifetime?.ApplicationStarted.Register(
               () => LogAddresses(app.ServerFeatures, logger));
 
-            app.UseRouting();
-            
-            app.ConfigureRequestResponseLogging();
             app.ConfigureExceptionHandler();
 
+            app.UseSerilogRequestLogging();
+
+            app.UseRouting();
+
+            app.UseCors();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
         }
 
-        private static void LogAddresses(IFeatureCollection features, ILogger logger)
+        private static void LogAddresses(IFeatureCollection features, Microsoft.Extensions.Logging.ILogger logger)
         {
             var addressFeature = features.Get<IServerAddressesFeature>();
 
@@ -102,14 +97,6 @@ namespace MyGarmin.Dashboard.Api.Hosting
             }
         }
 
-        private static HttpClientHandler ConfigureGarminClientMessageHandler()
-        {
-            return new HttpClientHandler
-            {
-                AllowAutoRedirect = true,
-                UseCookies = true,
-                CookieContainer = new CookieContainer()
-            };
-        }
+        
     }
 }

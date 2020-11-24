@@ -16,6 +16,7 @@ namespace MyGarmin.Dashboard.Api.Hosting
     {
         private const string AppSettingsFilename = "appSettings";
         private const string LoggingConfigurationFilename = "loggingConfiguration";
+        private const string MongoDbConfigurationFilename = "mongoDbConfiguration";
 
         public static async Task RunAsConsoleAsync(IHostBuilder hostBuilder, string consoleTitle)
         {
@@ -50,6 +51,8 @@ namespace MyGarmin.Dashboard.Api.Hosting
                     configApp.AddJsonFile($"{AppSettingsFilename}.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
                     configApp.AddJsonFile($"{LoggingConfigurationFilename}.json", optional: true);
                     configApp.AddJsonFile($"{LoggingConfigurationFilename}.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
+                    configApp.AddJsonFile($"{MongoDbConfigurationFilename}.json", optional: true);
+                    configApp.AddJsonFile($"{MongoDbConfigurationFilename}.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
                 });
         }
 
